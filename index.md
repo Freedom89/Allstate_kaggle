@@ -76,8 +76,52 @@ The competition was to create an algorithm which accurately predicts claims seve
 8. [Things i should/would have tried](#reflections)
 
 
-####  <a name="custom"></a>Custom Objectives 
+####  <a name="custom"></a>Custom Objectives  
 
+The first thing i have learnt about [MAE](http://www.vanguardsw.com/business-forecasting-101/mean-absolute-deviation-mad-mean-absolute-error-mae/) objective is that it optimises for the median rather than the mean, as compared to MSE which penalises more for points far away from the mean. More information can be found [here](http://stats.stackexchange.com/questions/147001/is-minimizing-squared-error-equivalent-to-minimizing-absolute-error-why-squared).
+
+If you had taken undergraduate mathematics, you would know that `y = |x|` is non differentiable at ` x = 0`. [When you are using Xgboost ` eval_metric = 'mae' `, the algorithm would still descent by MSE which poses a problem if you are optimising for MAE](http://stackoverflow.com/questions/34178287/difference-between-objective-and-feval-in-xgboost). One natural way to overcome this is to simply 'squeeze' the target variable, so the effect of values far away from the mean does not get over-penalised. 
+
+It turns out that numerical approximation is very useful (thank you taylor series!). This [link](http://research.microsoft.com/en-us/um/people/zhang/INRIA/Publis/Tutorial-Estim/node24.html) (**worth reading!**) describes the intuition behind optimising for MAE.
+
+To summarise, you can observe that the 'Fair' objective function mimics the least-absolute function pretty accurately.  
+
+
+<img src="http://research.microsoft.com/en-us/um/people/zhang/INRIA/Publis/Tutorial-Estim/img334.gif" width="400">
+
+The objective, gradient (first derivative), hessian (second derivative) of the above functions are defined as follows:
+
+<img src="http://research.microsoft.com/en-us/um/people/zhang/INRIA/Publis/Tutorial-Estim/img333.gif" width="400">
+
+Majority of the scripts in the forums uses the 'Fair' objective, - the code is 
+
+```
+def fair_obj(preds, dtrain):
+    fair_constant = 2
+    labels = dtrain.get_label()
+    x = (preds - labels)
+    den = abs(x) + fair_constant
+    grad = fair_constant * x / (den)
+    hess = fair_constant * fair_constant / (den * den)
+    return grad, hess
+```
+The smaller `fair_constant` is, the 'slower/smoother' the loss is. 
+
+This custom objective can then be used in xgb.train:
+
+```
+clf = xgb.train(params,
+                d_train,
+                100000,
+                watchlist,
+                early_stopping_rounds=early_stop,
+                obj=fair_obj,
+                verbose_eval = n_print,
+                feval=xg_eval_mae)
+```
+
+Additional/ Majority  of these information can be found [here](https://www.kaggle.com/c/allstate-claims-severity/forums/t/24520/effect-of-mae).
+ 
 #### [Back to contents](#start)
 ####  <a name="xgbfir"></a>Finding Interactions and Encoding
 #### [Back to contents](#start)
