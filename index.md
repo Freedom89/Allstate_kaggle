@@ -1,6 +1,6 @@
-Hello Dear Reader 
+#Hello Dear Reader,
 
-Feel free to skip directly to the [Content](#start) ,
+###Feel free to skip directly to the [Content](#start) ,
 ***
 
 ### Introduction
@@ -25,7 +25,9 @@ Which would be followed up by:
 The advice then given is: 
 
 	* Increase your online presence (through github, blogs)
-	* Find interesting projects to work on at your free time. 
+	* Find interesting projects to work on at your free time.
+
+*** 
  
 The truth is that I have procrastinated for quite a long time (with regard to the above two points), and it is about time i do something about it. To those who are in this field, everyone is talking about [xgboost](http://xgboost.readthedocs.io/) when it comes to **ANY** (structured) machine learning problems. 
 
@@ -39,7 +41,7 @@ Hence, I started out the competition with an initial goal of learning how to tun
 6. Time for stacking! I understood the concept, but i have never done stacking before ; Sadly, i did not extract my out-of-bag predictions from my previous models (Painful but important lesson). I then tried Xgboost and ridge regression for my second level modelling, which yielded lousy results. I gave up and decided to settle for top 10% instead. 
 7. Someone posted about using Neural Nets as a second level model close to the last day, which i decided to give it a last burst of fire - which worked; i was rank 78 on the public leaderboard and 46 on the private leaderboard which was really a surprise! 
 
-
+***
 **My point about saying all these is:** 
 
 	Kaggle is really a good place to start with lots of helpful people sharing.
