@@ -19,7 +19,7 @@ Hyperopt Scritps and Results are also included [here](https://github.com/Freedom
 ### Data_prep
 
 * Fork this Repo and make a directory named input.
-* Download the train & test set and unzip them. 
+* Download the train & test set from [here](https://www.kaggle.com/c/allstate-claims-severity/data) and unzip them. 
 * Run the scripts `power2.py` , `power3.py` and `fourm_1106_prep.py`
 * You should have 3 additional files for each script. 
 
@@ -38,12 +38,12 @@ The outputs and params are avaliable in the notebook. Note that not all outputs 
 
 ### Keras (Neural Networks)
 
-The motivation is from this [script](https://www.kaggle.com/mtinti/allstate-claims-severity/keras-starter-with-bagging-1111-84364/comments) which is in this github repo [here](https://github.com/Freedom89/Allstate_kaggle/blob/master/keras/keras.ipynb).
+The motivation is from this [script](https://www.kaggle.com/mtinti/allstate-claims-severity/keras-starter-with-bagging-1111-84364/comments) which is in this github repo found [here](https://github.com/Freedom89/Allstate_kaggle/blob/master/keras/keras.ipynb).
 
 I used 4 different sets of parameters.
 
 * The one found in the fourm.
-* With a different seed.
+* Same Model with a different seed.
 * By changing the second layer from 200 to 250 nodes.
 * Training the same model without using log transform. 
 
@@ -66,9 +66,9 @@ The outputs can be found in the `csv's` in the keras folder.
 
 * Combine all first level models into one dataframe with [combine_data.ipynb](https://github.com/Freedom89/Allstate_kaggle/blob/master/second_level_models/combine_data.ipynb) which outputs the [training set](https://github.com/Freedom89/Allstate_kaggle/blob/master/second_level_models/train_second_level_model.csv) and [test set](https://github.com/Freedom89/Allstate_kaggle/blob/master/second_level_models/test_second_level_model.csv).
 * Run a single 5-fold with early stopping on the out of bag data set with [keras\_stacking\_single\_fold.ipynb](https://github.com/Freedom89/Allstate_kaggle/blob/master/second_level_models/keras_stacking_single_fold.ipynb). 
-* You may use the pre-trained models included in that folder to skip the training. 
+	* You may use the pre-trained models included in that folder to skip the training. 
 * Bagged the above model 5 times with [keras\_stacking\_bagged.ipynb](https://github.com/Freedom89/Allstate_kaggle/blob/master/second_level_models/keras_stacking_bagged.ipynb).
-* take the second level model output and feed it back with the first level models to find the optimum weights with [fmin\_second\_level.ipynb](https://github.com/Freedom89/Allstate_kaggle/blob/master/fmin_second_level.ipynb).
+* Take the second level model output and feed it back with the first level models to find the optimum weights with [fmin\_second\_level.ipynb](https://github.com/Freedom89/Allstate_kaggle/blob/master/fmin_second_level.ipynb).
 * [Final submission](https://github.com/Freedom89/Allstate_kaggle/blob/master/allstate1117.71816974.csv). 
 
 
