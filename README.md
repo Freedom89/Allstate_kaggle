@@ -1,4 +1,4 @@
-<a href="https://www.kaggle.com/c/allstate-claims-severity" target="_blank"><img src="https://kaggle2.blob.core.windows.net/competitions/kaggle/5325/logos/front_page.png" width="250"></a>
+<a href="https://www.kaggle.com/c/allstate-claims-severity" target="_blank"><img src="https://www.allstatenewsroom.com/wp-content/uploads/2015/12/Allstate_Logo4.jpeg" width="250"></a>
 
 ###These are my scripts used for the Allstate Challenge on "How severe is an insurance claim?"
 
