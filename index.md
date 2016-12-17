@@ -29,14 +29,14 @@ The advice then given is:
 
 *** 
  
-The truth is that I have procrastinated for quite a long time (with regard to the above two points), and it is about time i do something about it. To those who are in this field, everyone is talking about [xgboost](http://xgboost.readthedocs.io/) when it comes to **ANY** (structured) machine learning problems. 
+**The truth is that I have procrastinated for quite a long time (with regard to the above two points), and it is about time i do something about it.** To those who are in this field, everyone is talking about [xgboost](http://xgboost.readthedocs.io/) when it comes to **ANY** (structured) machine learning problems. 
 
 Hence, I started out the competition with an initial goal of learning how to tune Xgboost and this is how my goals got evolved during the competition over a single month: 
 
 1. Manage to squeeze into top 10% with XGB's and wanted to attempt at achieving a bronze medal (top 10%). 
 2. Within no time at all, i was kicked out of top 10%. In order to climb back up to 10%, I had to ensemble with different models. Most people in the forums had recommended Neural Nets to ensemble with XGB. Unfortunately i had no experience with Neural Nets (other than Coursera) before!  
 3. Neural Nets are **Very Very** slow on CPU, thus to speed things up, i also had to learn how to set up CUDA on AWS GPU-compute series, install python, Theano, transfer the data and learning to configure juypter notebook! 
-4. With my Neural Net and XGB, an simple average got me into top 5% - great! let's attempt for a sliver medal instead (top 5%).
+4. With my Neural Net and XGB, a simple average got me into top 5% - great! let's attempt for a sliver medal instead (top 5%).
 5. However within no time at all, i was almost kicked out of top 5% and there was no guarantee that i might drop further on the private leaderboard due to overfitting.
 6. Time for stacking! I understood the concept, but i have never done stacking before ; Sadly, i did not extract my out-of-bag predictions from my previous models (Painful but important lesson). I then tried Xgboost and ridge regression for my second level modelling, which yielded lousy results. I gave up and decided to settle for top 10% instead. 
 7. Someone posted about using Neural Nets as a second level model close to the last day, which i decided to give it a last burst of fire - which worked; i was rank 78 on the public leaderboard and 46 on the private leaderboard which was really a surprise! 
@@ -45,6 +45,10 @@ Hence, I started out the competition with an initial goal of learning how to tun
 **My point about saying all these is:** 
 
 	Kaggle is really a good place to start with lots of helpful people sharing.
+
+***
+	
+###My objective for publishing this post is to:  
 	
 1. Share about my experience, learnings! 
 2. Document my code! 
@@ -58,33 +62,43 @@ Hence, I started out the competition with an initial goal of learning how to tun
 
 #"How severe is an insurance claim?"
 
-The competition was to create an algorithm which accurately predicts claims severity. The competition metric is *[Mean Absolute Error(MAE)](https://www.kaggle.com/wiki/MeanAbsoluteError)*  
+The competition was to create an algorithm which accurately predicts claims severity, and the competition metric is *[Mean Absolute Error(MAE)](https://www.kaggle.com/wiki/MeanAbsoluteError)* . 
+
+## Contents
+
+1. [Custom Objectives](#custom)
+2. [Finding Interactions and Encoding](#xgbfir)
+3. [Tuning Xgb](#Tune)
+4. [Neural Networks](#NN)
+5. [Ensemble version 1](#ensemble1)
+6. [Ensemble with weighted average](#ensemble2)
+7. [Ensemble with NN](#ensemble3)
+8. [Things i should/would have tried](#reflections)
 
 
+####  <a name="custom"></a>Custom Objectives 
+
+#### [Back to contents](#start)
+####  <a name="xgbfir"></a>Finding Interactions and Encoding
+#### [Back to contents](#start)
+
+####  <a name="Tune"></a>Tuning XGB 
+#### [Back to contents](#start)
+
+####  <a name="NN"></a>Neural Networks
+#### [Back to contents](#start)
 
 
+####  <a name="ensemble1"></a>Ensemble version 1
+#### [Back to contents](#start)
 
-3r2
+####  <a name="ensemble2"></a>Ensemble with weighted average
+#### [Back to contents](#start)
 
-32r
+####  <a name="ensemble3"></a>Ensemble with NN 
+#### [Back to contents](#start)
 
-23r
-32r2
-3r23r
+####  <a name="reflections"></a>Things i should/would have tried 
+#### [Back to contents](#start)
 
-23r
-
-2
-
-23r
-
-32r3r2  
-
-  
-  23r
-23  
-r  
-23r  
-23  
-r  
-23r  
+####

@@ -360,7 +360,7 @@ kbd {
 
 <hr>
 
-<p>The truth is that I have procrastinated for quite a long time (with regard to the above two points), and it is about time i do something about it. To those who are in this field, everyone is talking about <a href="http://xgboost.readthedocs.io/">xgboost</a> when it comes to <strong>ANY</strong> (structured) machine learning problems. </p>
+<p><strong>The truth is that I have procrastinated for quite a long time (with regard to the above two points), and it is about time i do something about it.</strong> To those who are in this field, everyone is talking about <a href="http://xgboost.readthedocs.io/">xgboost</a> when it comes to <strong>ANY</strong> (structured) machine learning problems. </p>
 
 <p>Hence, I started out the competition with an initial goal of learning how to tune Xgboost and this is how my goals got evolved during the competition over a single month: </p>
 
@@ -368,7 +368,7 @@ kbd {
 <li>Manage to squeeze into top 10% with XGB&#39;s and wanted to attempt at achieving a bronze medal (top 10%). </li>
 <li>Within no time at all, i was kicked out of top 10%. In order to climb back up to 10%, I had to ensemble with different models. Most people in the forums had recommended Neural Nets to ensemble with XGB. Unfortunately i had no experience with Neural Nets (other than Coursera) before!<br></li>
 <li>Neural Nets are <strong>Very Very</strong> slow on CPU, thus to speed things up, i also had to learn how to set up CUDA on AWS GPU-compute series, install python, Theano, transfer the data and learning to configure juypter notebook! </li>
-<li>With my Neural Net and XGB, an simple average got me into top 5% - great! let&#39;s attempt for a sliver medal instead (top 5%).</li>
+<li>With my Neural Net and XGB, a simple average got me into top 5% - great! let&#39;s attempt for a sliver medal instead (top 5%).</li>
 <li>However within no time at all, i was almost kicked out of top 5% and there was no guarantee that i might drop further on the private leaderboard due to overfitting.</li>
 <li>Time for stacking! I understood the concept, but i have never done stacking before ; Sadly, i did not extract my out-of-bag predictions from my previous models (Painful but important lesson). I then tried Xgboost and ridge regression for my second level modelling, which yielded lousy results. I gave up and decided to settle for top 10% instead. </li>
 <li>Someone posted about using Neural Nets as a second level model close to the last day, which i decided to give it a last burst of fire - which worked; i was rank 78 on the public leaderboard and 46 on the private leaderboard which was really a surprise! </li>
@@ -379,6 +379,10 @@ kbd {
 <p><strong>My point about saying all these is:</strong> </p>
 
 <div><pre><code class="language-none">Kaggle is really a good place to start with lots of helpful people sharing.</code></pre></div>
+
+<hr>
+
+<h3 id="toc_3">My objective for publishing this post is to:</h3>
 
 <ol>
 <li>Share about my experience, learnings! </li>
@@ -392,33 +396,54 @@ kbd {
 
 <p><a href="https://www.kaggle.com/c/allstate-claims-severity" target="_blank"><img src="https://www.allstatenewsroom.com/wp-content/uploads/2015/12/Allstate_Logo4.jpeg" width="400"></a></p>
 
-<h1 id="toc_3">&quot;How severe is an insurance claim?&quot;</h1>
+<h1 id="toc_4">&quot;How severe is an insurance claim?&quot;</h1>
 
-<p>The competition was to create an algorithm which accurately predicts claims severity. The competition metric is <em><a href="https://www.kaggle.com/wiki/MeanAbsoluteError">Mean Absolute Error(MAE)</a></em>  </p>
+<p>The competition was to create an algorithm which accurately predicts claims severity, and the competition metric is <em><a href="https://www.kaggle.com/wiki/MeanAbsoluteError">Mean Absolute Error(MAE)</a></em> . </p>
 
-<p>3r2</p>
+<h2 id="toc_5">Contents</h2>
 
-<p>32r</p>
+<ol>
+<li><a href="#custom">Custom Objectives</a></li>
+<li><a href="#xgbfir">Finding Interactions and Encoding</a></li>
+<li><a href="#Tune">Tuning Xgb</a></li>
+<li><a href="#NN">Neural Networks</a></li>
+<li><a href="#ensemble1">Ensemble version 1</a></li>
+<li><a href="#ensemble2">Ensemble with weighted average</a></li>
+<li><a href="#ensemble3">Ensemble with NN</a></li>
+<li><a href="#reflections">Things i should/would have tried</a></li>
+</ol>
 
-<p>23r
-32r2
-3r23r</p>
+<h4 id="toc_6"><a name="custom"></a>Custom Objectives</h4>
 
-<p>23r</p>
+<h4 id="toc_7"><a href="#start">Back to contents</a></h4>
 
-<p>2</p>
+<h4 id="toc_8"><a name="xgbfir"></a>Finding Interactions and Encoding</h4>
 
-<p>23r</p>
+<h4 id="toc_9"><a href="#start">Back to contents</a></h4>
 
-<p>32r3r2  </p>
+<h4 id="toc_10"><a name="Tune"></a>Tuning XGB</h4>
 
-<p>23r
-23<br>
-r<br>
-23r<br>
-23<br>
-r<br>
-23r  </p>
+<h4 id="toc_11"><a href="#start">Back to contents</a></h4>
+
+<h4 id="toc_12"><a name="NN"></a>Neural Networks</h4>
+
+<h4 id="toc_13"><a href="#start">Back to contents</a></h4>
+
+<h4 id="toc_14"><a name="ensemble1"></a>Ensemble version 1</h4>
+
+<h4 id="toc_15"><a href="#start">Back to contents</a></h4>
+
+<h4 id="toc_16"><a name="ensemble2"></a>Ensemble with weighted average</h4>
+
+<h4 id="toc_17"><a href="#start">Back to contents</a></h4>
+
+<h4 id="toc_18"><a name="ensemble3"></a>Ensemble with NN</h4>
+
+<h4 id="toc_19"><a href="#start">Back to contents</a></h4>
+
+<h4 id="toc_20"><a name="reflections"></a>Things i should/would have tried</h4>
+
+<h4 id="toc_21"><a href="#start">Back to contents</a></h4>
 
 
 
