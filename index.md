@@ -48,11 +48,11 @@ Hence, I started out the competition with an initial goal of learning how to tun
 
 ***
 	
-###My objective for publishing this post is to:  
+### Therefore, my objective for publishing this post is to:  
 	
 1. Share about my experience, learnings! 
 2. Document my code! 
-3. Encourage fledging data scientists (to be) to start! 
+3. Encourage fledging data scientists to-be to start! 
 
 ***
 
