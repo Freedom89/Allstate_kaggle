@@ -54,11 +54,14 @@ The outputs can be found in the `csv's` in the keras folder.
 
 * Everything is [here](https://github.com/Freedom89/Allstate_kaggle/blob/master/ef_rf/rf_ef.ipynb)
 
+***
+
 ### Weighted Average
 
 * Everything is [here](https://github.com/Freedom89/Allstate_kaggle/blob/master/fmin_first_level_models.ipynb)
 * Submission file which would be ranked 102 in the private leaderboard (top 5%).
 
+***
 ### <a name="stacking"></a> Second Level Modeling (Stacking) 
 
 * Combine all first level models into one dataframe with [combine_data.ipynb](https://github.com/Freedom89/Allstate_kaggle/blob/master/second_level_models/combine_data.ipynb) which outputs the [training set](https://github.com/Freedom89/Allstate_kaggle/blob/master/second_level_models/train_second_level_model.csv) and [test set](https://github.com/Freedom89/Allstate_kaggle/blob/master/second_level_models/test_second_level_model.csv).
