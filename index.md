@@ -67,7 +67,7 @@ The competition was to create an algorithm which accurately predicts claims seve
 ## Contents
 
 1. [Custom Objectives](#custom)
-2. [Finding Interactions and Encoding](#xgbfir)
+2. [Finding Interactions, Encoding, boxcox](#xgbfir)
 3. [Tuning Xgb](#Tune)
 4. [Neural Networks](#NN)
 5. [Ensemble version 1](#ensemble1)
@@ -77,6 +77,8 @@ The competition was to create an algorithm which accurately predicts claims seve
 
 
 ####  <a name="custom"></a>Custom Objectives  
+
+***
 
 The first thing i have learnt about [MAE](http://www.vanguardsw.com/business-forecasting-101/mean-absolute-deviation-mad-mean-absolute-error-mae/) objective is that it optimises for the median rather than the mean, as compared to MSE which penalises more for points far away from the mean. More information can be found [here](http://stats.stackexchange.com/questions/147001/is-minimizing-squared-error-equivalent-to-minimizing-absolute-error-why-squared).
 
@@ -123,26 +125,91 @@ clf = xgb.train(params,
 Additional/ Majority  of these information can be found [here](https://www.kaggle.com/c/allstate-claims-severity/forums/t/24520/effect-of-mae).
  
 #### [Back to contents](#start)
-####  <a name="xgbfir"></a>Finding Interactions and Encoding
+####  <a name="xgbfir"></a>Finding Interactions, Encoding, boxcox
+
+***
+
+##### Finding interactions
+One of the problems of linear regression is finding feature interactions. [This](https://github.com/Far0n/xgbfi) solves the problem by finding N-way interactions you can use to improve your xgb or as features to input to your model. 
+
+Fortunately, someone else posted [this](https://www.kaggle.com/modkzs/allstate-claims-severity/lexical-encoding-feature-comb/discussion) which saved me abit of time on finding N-way feature interactions. 
+
+##### Encoding
+
+Another interesting function i have learnt on encoding categorical features as compared to label encoding or one hot encoding:
+
+```
+def encode(charcode):
+    r = 0
+    ln = len(str(charcode))
+    for i in range(ln):
+        r += (ord(str(charcode)[i]) - ord('A') + 1) * 26 ** (ln - i - 1)
+    return r
+    
+```
+In the raw data, the features are`A, B, ... , Z, then AA, .. AZ ..`, which seems to suggest that the order matters. 
+
+What the function does is essentially:
+
+* `encode('A')   = 1 `
+* `encode('Z')   = 26`
+* `encode('AA')  = 27`
+* `encode('AC')  = 29`
+
+This can be used in addition to `min/max/mean/counts/ti-idf` which i did not get to try in this competition. 
+
+##### Boxcox
+
+In Certain Machine Learning Algorithms, a normally distributed column can help the algorithm perform better. Unfortunately, figuring out the exact transformation to take on each individual column requires a huge effort.
+
+Introducing boxcox, a (very) decent way of transforming these features by measuring their [skew](https://en.wikipedia.org/wiki/Skewness).
+
+There are good articles on explaining boxcox:
+
+* [Fairly Layman](https://www.isixsigma.com/tools-templates/normality/making-data-normal-using-box-cox-power-transformation/)
+* [Math and more Math](http://onlinestatbook.com/2/transformations/box-cox.html) Never thought year one calculus would be this useful!
+
+
 #### [Back to contents](#start)
 
 ####  <a name="Tune"></a>Tuning XGB 
+***
+
+Unless you are extremely experienced in Machine Learning and have a great intuition over parameters, it is likely you have to do some trial and error. 
+
+I recommend [hyperopt](https://github.com/hyperopt/hyperopt) which is a python library for serial and parallel optimization over awkward search spaces. You can even adjust / change the number of layers in a Neural Net! 
+
+I have some examples in my git repo:
+
+* [Xgb](https://github.com/Freedom89/Allstate_kaggle/blob/master/hyperopt_results/hyper_opt_xgb.ipynb)
+	* Change the data input to power3 if you want to run hyperopt for 3-Way interaction	 
+* [Extra Trees](https://github.com/Freedom89/Allstate_kaggle/blob/master/hyperopt_results/extratrees_hyper_opt.ipynb)
+* [Random Forest](https://github.com/Freedom89/Allstate_kaggle/blob/master/hyperopt_results/hyper_opt_random_forest.ipynb)
+
+The results of the hyperopt can also be found in the [repo](https://github.com/Freedom89/Allstate_kaggle/tree/master/hyperopt_results).
+
+
 #### [Back to contents](#start)
 
 ####  <a name="NN"></a>Neural Networks
+***
 #### [Back to contents](#start)
 
 
 ####  <a name="ensemble1"></a>Ensemble version 1
+***
 #### [Back to contents](#start)
 
 ####  <a name="ensemble2"></a>Ensemble with weighted average
+***
 #### [Back to contents](#start)
 
 ####  <a name="ensemble3"></a>Ensemble with NN 
+***
 #### [Back to contents](#start)
 
 ####  <a name="reflections"></a>Things i should/would have tried 
+***
 #### [Back to contents](#start)
 
 ####

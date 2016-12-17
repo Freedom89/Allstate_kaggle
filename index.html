@@ -404,7 +404,7 @@ kbd {
 
 <ol>
 <li><a href="#custom">Custom Objectives</a></li>
-<li><a href="#xgbfir">Finding Interactions and Encoding</a></li>
+<li><a href="#xgbfir">Finding Interactions, Encoding, boxcox</a></li>
 <li><a href="#Tune">Tuning Xgb</a></li>
 <li><a href="#NN">Neural Networks</a></li>
 <li><a href="#ensemble1">Ensemble version 1</a></li>
@@ -414,6 +414,8 @@ kbd {
 </ol>
 
 <h4 id="toc_6"><a name="custom"></a>Custom Objectives</h4>
+
+<hr>
 
 <p>The first thing i have learnt about <a href="http://www.vanguardsw.com/business-forecasting-101/mean-absolute-deviation-mad-mean-absolute-error-mae/">MAE</a> objective is that it optimises for the median rather than the mean, as compared to MSE which penalises more for points far away from the mean. More information can be found <a href="http://stats.stackexchange.com/questions/147001/is-minimizing-squared-error-equivalent-to-minimizing-absolute-error-why-squared">here</a>.</p>
 
@@ -457,33 +459,109 @@ kbd {
 
 <h4 id="toc_7"><a href="#start">Back to contents</a></h4>
 
-<h4 id="toc_8"><a name="xgbfir"></a>Finding Interactions and Encoding</h4>
+<h4 id="toc_8"><a name="xgbfir"></a>Finding Interactions, Encoding, boxcox</h4>
 
-<h4 id="toc_9"><a href="#start">Back to contents</a></h4>
+<hr>
 
-<h4 id="toc_10"><a name="Tune"></a>Tuning XGB</h4>
+<h5 id="toc_9">Finding interactions</h5>
 
-<h4 id="toc_11"><a href="#start">Back to contents</a></h4>
+<p>One of the problems of linear regression is finding feature interactions. <a href="https://github.com/Far0n/xgbfi">This</a> solves the problem by finding N-way interactions you can use to improve your xgb or as features to input to your model. </p>
 
-<h4 id="toc_12"><a name="NN"></a>Neural Networks</h4>
+<p>Fortunately, someone else posted <a href="https://www.kaggle.com/modkzs/allstate-claims-severity/lexical-encoding-feature-comb/discussion">this</a> which saved me abit of time on finding N-way feature interactions. </p>
 
-<h4 id="toc_13"><a href="#start">Back to contents</a></h4>
+<h5 id="toc_10">Encoding</h5>
 
-<h4 id="toc_14"><a name="ensemble1"></a>Ensemble version 1</h4>
+<p>Another interesting function i have learnt on encoding categorical features as compared to label encoding or one hot encoding:</p>
 
-<h4 id="toc_15"><a href="#start">Back to contents</a></h4>
+<div><pre><code class="language-none">def encode(charcode):
+    r = 0
+    ln = len(str(charcode))
+    for i in range(ln):
+        r += (ord(str(charcode)[i]) - ord(&#39;A&#39;) + 1) * 26 ** (ln - i - 1)
+    return r
+    </code></pre></div>
 
-<h4 id="toc_16"><a name="ensemble2"></a>Ensemble with weighted average</h4>
+<p>In the raw data, the features are<code>A, B, ... , Z, then AA, .. AZ ..</code>, which seems to suggest that the order matters. </p>
 
-<h4 id="toc_17"><a href="#start">Back to contents</a></h4>
+<p>What the function does is essentially:</p>
 
-<h4 id="toc_18"><a name="ensemble3"></a>Ensemble with NN</h4>
+<ul>
+<li><code>encode(&#39;A&#39;)   = 1</code></li>
+<li><code>encode(&#39;Z&#39;)   = 26</code></li>
+<li><code>encode(&#39;AA&#39;)  = 27</code></li>
+<li><code>encode(&#39;AC&#39;)  = 29</code></li>
+</ul>
 
-<h4 id="toc_19"><a href="#start">Back to contents</a></h4>
+<p>This can be used in addition to <code>min/max/mean/counts/ti-idf</code> which i did not get to try in this competition. </p>
 
-<h4 id="toc_20"><a name="reflections"></a>Things i should/would have tried</h4>
+<h5 id="toc_11">Boxcox</h5>
 
-<h4 id="toc_21"><a href="#start">Back to contents</a></h4>
+<p>In Certain Machine Learning Algorithms, a normally distributed column can help the algorithm perform better. Unfortunately, figuring out the exact transformation to take on each individual column requires a huge effort.</p>
+
+<p>Introducing boxcox, a (very) decent way of transforming these features by measuring their <a href="https://en.wikipedia.org/wiki/Skewness">skew</a>.</p>
+
+<p>There are good articles on explaining boxcox:</p>
+
+<ul>
+<li><a href="https://www.isixsigma.com/tools-templates/normality/making-data-normal-using-box-cox-power-transformation/">Fairly Layman</a></li>
+<li><a href="http://onlinestatbook.com/2/transformations/box-cox.html">Math and more Math</a> Never thought year one calculus would be this useful!</li>
+</ul>
+
+<h4 id="toc_12"><a href="#start">Back to contents</a></h4>
+
+<h4 id="toc_13"><a name="Tune"></a>Tuning XGB</h4>
+
+<hr>
+
+<p>Unless you are extremely experienced in Machine Learning and have a great intuition over parameters, it is likely you have to do some trial and error. </p>
+
+<p>I recommend <a href="https://github.com/hyperopt/hyperopt">hyperopt</a> which is a python library for serial and parallel optimization over awkward search spaces. You can even adjust / change the number of layers in a Neural Net! </p>
+
+<p>I have some examples in my git repo:</p>
+
+<ul>
+<li><a href="https://github.com/Freedom89/Allstate_kaggle/blob/master/hyperopt_results/hyper_opt_xgb.ipynb">Xgb</a>
+
+<ul>
+<li>Change the data input to power3 if you want to run hyperopt for 3-Way interaction<br></li>
+</ul></li>
+<li><a href="https://github.com/Freedom89/Allstate_kaggle/blob/master/hyperopt_results/extratrees_hyper_opt.ipynb">Extra Trees</a></li>
+<li><a href="https://github.com/Freedom89/Allstate_kaggle/blob/master/hyperopt_results/hyper_opt_random_forest.ipynb">Random Forest</a></li>
+</ul>
+
+<p>The results of the hyperopt can also be found in the <a href="https://github.com/Freedom89/Allstate_kaggle/tree/master/hyperopt_results">repo</a>.</p>
+
+<h4 id="toc_14"><a href="#start">Back to contents</a></h4>
+
+<h4 id="toc_15"><a name="NN"></a>Neural Networks</h4>
+
+<hr>
+
+<h4 id="toc_16"><a href="#start">Back to contents</a></h4>
+
+<h4 id="toc_17"><a name="ensemble1"></a>Ensemble version 1</h4>
+
+<hr>
+
+<h4 id="toc_18"><a href="#start">Back to contents</a></h4>
+
+<h4 id="toc_19"><a name="ensemble2"></a>Ensemble with weighted average</h4>
+
+<hr>
+
+<h4 id="toc_20"><a href="#start">Back to contents</a></h4>
+
+<h4 id="toc_21"><a name="ensemble3"></a>Ensemble with NN</h4>
+
+<hr>
+
+<h4 id="toc_22"><a href="#start">Back to contents</a></h4>
+
+<h4 id="toc_23"><a name="reflections"></a>Things i should/would have tried</h4>
+
+<hr>
+
+<h4 id="toc_24"><a href="#start">Back to contents</a></h4>
 
 
 
