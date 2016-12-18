@@ -37,7 +37,7 @@ Hence, I started out the competition with an initial goal of learning how to tun
 2. Within no time at all, i was kicked out of top 10%. In order to climb back up to 10%, I had to ensemble with different models. Most people in the forums had recommended Neural Nets to ensemble with XGB. Unfortunately i had no experience with Neural Nets (other than Coursera) before!  
 3. Neural Nets are **Very Very** slow on CPU, thus to speed things up, i also had to learn how to set up CUDA on AWS GPU-compute series, install python, Theano, transfer the data and learning to configure juypter notebook! 
 4. With my Neural Net and XGB, a simple average got me into top 5% - great! let's attempt for a sliver medal instead (top 5%).
-5. However within no time at all, i was almost kicked out of top 5% and there was no guarantee that i might drop further on the private leaderboard due to overfitting.
+5. Unfortunately, within no time at all (again), i was almost kicked out of top 5% and there was no guarantee that i might drop further on the private leaderboard due to overfitting.
 6. Time for stacking! I understood the concept, but i have never done stacking before ; Sadly, i did not extract my out-of-bag predictions from my previous models (Painful but important lesson). I then tried Xgboost and ridge regression for my second level modelling, which yielded lousy results. I gave up and decided to settle for top 10% instead. 
 7. Someone posted about using Neural Nets as a second level model close to the last day, which i decided to give it a last burst of fire - which worked; i was rank 78 on the public leaderboard and 46 on the private leaderboard which was really a surprise! 
 
@@ -164,11 +164,23 @@ In Certain Machine Learning Algorithms, a normally distributed column can help t
 
 Introducing boxcox, a (very) decent way of transforming these features by measuring their [skew](https://en.wikipedia.org/wiki/Skewness).
 
-There are good articles on explaining boxcox:
+These are good articles on explaining boxcox that i came across:
 
 * [Fairly Layman](https://www.isixsigma.com/tools-templates/normality/making-data-normal-using-box-cox-power-transformation/)
 * [Math and more Math](http://onlinestatbook.com/2/transformations/box-cox.html) Never thought year one calculus would be this useful!
 
+Some code:
+
+```
+skewed_feats = train[numeric_feats].apply(lambda x: skew(x.dropna()))
+skewed_feats = skewed_feats[abs(skewed_feats) > 0.25]
+skewed_feats = skewed_feats.index
+
+for feats in skewed_feats:
+    train_test[feats] = train_test[feats] + 1
+    train_test[feats], lam = boxcox(train_test[feats])
+
+```
 
 #### [Back to contents](#start)
 
@@ -188,13 +200,141 @@ I have some examples in my git repo:
 
 The results of the hyperopt can also be found in the [repo](https://github.com/Freedom89/Allstate_kaggle/tree/master/hyperopt_results).
 
-
 #### [Back to contents](#start)
 
 ####  <a name="NN"></a>Neural Networks
+
+As mentioned, this is my first time coding a neural net outside of Coursera ([Andrew Ng's Machine Learning](https://www.coursera.org/learn/machine-learning) and [UOW's Machine Learning specialisation](https://www.coursera.org/specializations/machine-learning)).
+
+##### Using AWS 
+
+[This](https://www.kaggle.com/mtinti/allstate-claims-severity/keras-starter-with-bagging-1111-84364/comments) script helped a lot in starting out with Neural Networks, but a 8 core Mac Book pro would have taken at least 2 days (55 runs * 30 seconds * 10 fold * 10 bag = 45 hours)!
+
+With the hype about Cloud, I decided to give AWS GPU-compute series spot instances a go, which was about 0.35 cents an hour. There are plenty of resources online, but there are still a bit of missing pieces). 
+
+I will write my own guide of installing Anaconda, Juypter, Cudas, Keras, Theano in a separate post soon. 
+
+For those who are starting out with Keras like me, there are two things you must take note: 
+
+In your home directory, run the following:
+
+```
+cd .keras/
+nano keras.json #use open/subl depending on your OS 
+
+```
+You should see:
+
+```
+{
+    "image_dim_ordering": "tf", 
+    "epsilon": 1e-07, 
+    "floatx": "float32", 
+    "backend": "Tensorflow"
+}
+```
+
+If you need to use Theano, you have to edit `Tensorflow` to `Thenao`
+
+```
+{
+    "image_dim_ordering": "tf", 
+    "epsilon": 1e-07, 
+    "floatx": "float32", 
+    "backend": "theano"
+}
+```
+After installing theano and if you are using nvidia GPU, you should have a `.theanorc` file in the home directory, if it is not available you need to create it and paste the following: 
+
+```
+[global]
+floatX = float32
+device = gpu
+[mode] = FAST_RUN
+
+[nvcc]
+fastmath=TRUE
+
+[cuda]
+root = /usr/local/cuda
+
+[lib]
+cnmem = 0.95
+```
+
+The line `cnmem = 0.95` is very important, it speed up each iteration from 12 seconds to 6! 	
+
+##### Print Validation loss and Early Stopping
+
+Similar to XGB, to see how the score is improving and early stopping:
+
+You need to first specify the metric function:
+
+```
+def mae(y_true, y_pred):
+    return K.mean(K.abs(K.exp(y_true) - K.exp(y_pred)))
+```
+
+and put it inside the `keras.compile` function:
+
+```
+model.compile(loss = 'mae', optimizer = optimizer, metrics=[mae])
+
+```
+And the early stopping + Model checkpoint, 
+
+```
+callsback_list = [EarlyStopping(patience=10),
+                  ModelCheckpoint('keras-regressor-' + str(i+1) +'_'+ str(j+1) + '.check'\
+                                  , monitor='val_loss', save_best_only=True, verbose=0)]
+```
+
+and in the model specify the validation data as well as callsback_list:
+
+```
+fit = model.fit_generator(generator = batch_generator(xtr, ytr, 128, True),
+                                  nb_epoch = nepochs,
+                                  samples_per_epoch = xtr.shape[0],
+                                  verbose = 0,
+                                  validation_data=(xte.todense(),yte),
+                                  callbacks=callsback_list)
+```
+
+where `xtr, ytr` is your training set, and `xte, yte` is your validation set in specified from `Kfold`. 
+
+You can then call the best model with `val_loss` or `val_mae` and make the best prediction with:
+
+```
+fit = load_model('keras-regressor-' + str(i+1) + '_'+ str(j+1) + '.check')
+    
+pred += np.exp(fit.predict_generator(generator = batch_generatorp(xte, 800, False), \
+                                       val_samples = xte.shape[0])[:,0])-200
+```
+
+[Spoiler alert](https://github.com/Freedom89/Allstate_kaggle/blob/master/second_level_models/keras_stacking_single_fold.ipynb) to see how i used early stopping for my second level modelling. It also turns out that saving the model is a good idea if you want to use it later on. You can try it by commenting out these lines in the notebook:
+
+```
+#comment from here 
+callsback_list = [EarlyStopping(patience=10),\
+          ModelCheckpoint('keras-regressor-' + str(i+1) +'_'+ str(j+1) + '.check'\
+                          , monitor='val_loss', save_best_only=True, verbose=0)]
+    
+model = nn_model(layer1=250,layer2=100,\
+     dropout1 = 0.4,dropout2=0.2, \
+     optimizer = 'adadelta')
+    
+fit = model.fit_generator(generator = batch_generator(xtr, ytr, 128, True),
+                          nb_epoch = nepochs,
+                          samples_per_epoch = xtr.shape[0],
+                          verbose = 0,
+                          validation_data=(xte.todense(),yte),
+                          callbacks=callsback_list)
+    
+# to here if you just want to use the pre-trained models yourself.
+```
+
 ***
 #### [Back to contents](#start)
-
 
 ####  <a name="ensemble1"></a>Ensemble version 1
 ***
