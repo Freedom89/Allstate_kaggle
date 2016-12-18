@@ -4,7 +4,7 @@ This post records my experience in Kaggle's *[Allstate Claims Severity](https://
 
 * [Self-Introduction](#intro)
 * [Candid Reflections on the Competition](#reflect)
-* [Things i have learnt](#start)
+* [Things I have learnt](#start)
 
 ***
 
