@@ -699,7 +699,7 @@ oob_df.to_csv(sub_file, index = False)
 
 <p>Additionally, if you are also running on AWS, disconnections to your juypter kernels might occur and you are unable to track the progress of your code. (e.g which fold / bags it is running). I overcame this problem by adding these few lines in my code:</p>
 
-<p>Example of XGB:</p>
+<p>Example for XGB:</p>
 
 <div><pre><code class="language-none">partial_evalutaion = open(&#39;temp_scores_power2.txt&#39;,&#39;a&#39;) 
 
@@ -708,7 +708,7 @@ partial_evalutaion.write(&#39;Fold &#39;+ str(i) + &#39;- MAE:&#39;+ str(cv_scor
 partial_evalutaion.flush()
 </code></pre></div>
 
-<p>Example of hyperopt:</p>
+<p>Example for hyperopt:</p>
 
 <div><pre><code class="language-none">partial_evalutaion = open(&#39;extra_trees_bootstrap2.txt&#39;,&#39;a&#39;)   
 
@@ -865,7 +865,28 @@ bestWght = wghts[np.argmin(lls)]
 
 <hr>
 
+<ol>
+<li>My Kfold cv results were pretty inconsistent, i should have shuffled the datasets by binning the target. </li>
+<li>Train models specifically for high values of the dataset. </li>
+<li>Bagging with other datasets, other forms of feature engineering </li>
+<li>Explore second level modelling more, eg. weighted average with only 2nd level models.</li>
+</ol>
+
+<p>Here are also additional links of the top solutions:</p>
+
+<ul>
+<li><a href="https://www.kaggle.com/c/allstate-claims-severity/forums/t/26416/1st-place-solution">1st place</a></li>
+<li><a href="https://www.kaggle.com/c/allstate-claims-severity/forums/t/26427/2nd-place-solution">2nd place</a></li>
+<li><a href="https://www.kaggle.com/c/allstate-claims-severity/forums/t/26447/faron-s-3rd-place-solution">3rd place</a></li>
+<li><a href="https://www.kaggle.com/c/allstate-claims-severity/forums/t/26537/giba-7-place-solution">7th place</a></li>
+<li><a href="https://www.kaggle.com/c/allstate-claims-severity/forums/t/26440/8-solution">8th place</a></li>
+<li><a href="https://www.kaggle.com/c/allstate-claims-severity/forums/t/26414/12th-place-solution">12th place</a></li>
+<li><a href="https://www.kaggle.com/c/allstate-claims-severity/forums/t/26430/16-place-solution-and-some-questions-about-it">16th place</a></li>
+</ul>
+
 <h4 id="toc_27"><a href="#start">Back to contents</a></h4>
+
+<h1 id="toc_28">Thanks For Reading!</h1>
 
 
 

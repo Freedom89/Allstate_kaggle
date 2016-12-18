@@ -370,7 +370,7 @@ Similar concepts applies for other models as well (which you can refer to the gi
 
 Additionally, if you are also running on AWS, disconnections to your juypter kernels might occur and you are unable to track the progress of your code. (e.g which fold / bags it is running). I overcame this problem by adding these few lines in my code:
 
-Example of XGB:
+Example for XGB:
 
 ```
 partial_evalutaion = open('temp_scores_power2.txt','a') 
@@ -381,7 +381,7 @@ partial_evalutaion.flush()
 
 ```
 
-Example of hyperopt:
+Example for hyperopt:
 
 ```
 partial_evalutaion = open('extra_trees_bootstrap2.txt','a')   
@@ -518,6 +518,25 @@ The final weighted scores, methods and datasets i have used can be found [here](
 
 ####  <a name="reflections"></a>Things i should/would have tried 
 ***
+
+1. My Kfold cv results were pretty inconsistent, i should have shuffled the datasets by binning the target. 
+2. Train models specifically for high values of the dataset. 
+3. Bagging with other datasets, other forms of feature engineering 
+4. Explore second level modelling more, eg. weighted average with only 2nd level models.
+
+Here are also additional links of the top solutions:
+
+* [1st place](https://www.kaggle.com/c/allstate-claims-severity/forums/t/26416/1st-place-solution)
+* [2nd place](https://www.kaggle.com/c/allstate-claims-severity/forums/t/26427/2nd-place-solution)
+* [3rd place](https://www.kaggle.com/c/allstate-claims-severity/forums/t/26447/faron-s-3rd-place-solution)
+* [7th place](https://www.kaggle.com/c/allstate-claims-severity/forums/t/26537/giba-7-place-solution)
+* [8th place](https://www.kaggle.com/c/allstate-claims-severity/forums/t/26440/8-solution)
+* [12th place](https://www.kaggle.com/c/allstate-claims-severity/forums/t/26414/12th-place-solution)
+* [16th place](https://www.kaggle.com/c/allstate-claims-severity/forums/t/26430/16-place-solution-and-some-questions-about-it)
+
+
 #### [Back to contents](#start)
 
 ####
+
+# Thanks For Reading! 
