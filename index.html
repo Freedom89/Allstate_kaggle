@@ -328,66 +328,77 @@ kbd {
 
 <body>
 
-<h1 id="toc_0">Hello Dear Reader,</h1>
+<h1 id="toc_0">Getting into Top 5% on Kaggle</h1>
 
-<h3 id="toc_1">Feel free to skip directly to the <a href="#start">Content</a> ,</h3>
+<p>This post records my experience in Kaggle&#39;s <em><a href="https://www.kaggle.com/c/allstate-claims-severity">Allstate Claims Severity</a></em> competition. It has three parts—feel free to skip to whichever you&#39;re interested in!</p>
+
+<ul>
+<li><a href="#intro">Self-Introduction</a></li>
+<li><a href="#reflect">Candid Reflections on the Competition</a></li>
+<li><a href="#start">Detailed Methodology</a></li>
+</ul>
 
 <hr>
 
-<h3 id="toc_2">Introduction</h3>
+<p><a name="intro"></a></p>
 
-<p>I am Yi Xiang, currently employed at a Junior Data Scientist! Do drop me a message or feedback if you think I can improve in any way possible! You can reach me at my <a href="https://www.linkedin.com/in/yi-xiang-low-b349137b">linked-in</a>! </p>
+<h3 id="toc_1">Self-Introduction</h3>
 
-<p>In the many Meet-ups i have attended, many fledging data scientists to-be have questioned employers in Data Science or expert data scientists:</p>
+<p>Hello! I am Yi Xiang, currently employed as a Junior Data Scientist. Feel free to drop me a message if you think I can improve in any way! You can reach me at my <a href="https://www.linkedin.com/in/yi-xiang-low-b349137b">LinkedIn</a>.</p>
+
+<p>In the many meet-ups I have attended, a common question that aspiring data scientists ask employers is:</p>
 
 <div><pre><code class="language-none">What do you look for in a potential hire? </code></pre></div>
 
-<p>The answer is usually:</p>
+<p>Typical answers would include:</p>
 
-<div><pre><code class="language-none">* Ability to communicate or story-tell
-* Coding ability 
-* Passion / Learning ability 
+<div><pre><code class="language-none">* Communication or storytelling skills
+* Coding proficiency
+* Learning ability
+* Passion
 * And the lists goes on...</code></pre></div>
 
-<p>Which would be followed up by:</p>
+<p>Upon hearing this, the follow-up question usually most likely be:</p>
 
-<div><pre><code class="language-none"> &quot;How should i demonstrate this to my potential employer?&quot;</code></pre></div>
+<div><pre><code class="language-none"> How should I demonstrate this to my potential employer?</code></pre></div>
 
-<p>The advice then given is: </p>
+<p>And the advice given is usually to: </p>
 
-<div><pre><code class="language-none">* Increase your online presence (through github, blogs)
-* Find interesting projects to work on at your free time.</code></pre></div>
+<div><pre><code class="language-none">* Increase online presence (e.g. through github, blogs)
+* Find interesting projects to work on</code></pre></div>
+
+<p>The truth is, I had procrastinated on fulfilling the above two points, and it was time I did something about it. Kaggle seemed like a good fit for the above two objectives. That was how I joined the Allstate Claims Severity competition on 2nd nov, which lasted from Oct to Dec 2016.  </p>
 
 <hr>
 
-<p><strong>The truth is that I have procrastinated for quite a long time (with regard to the above two points), and it is about time i do something about it.</strong> To those who are in this field, everyone is talking about <a href="http://xgboost.readthedocs.io/">xgboost</a> when it comes to <strong>ANY</strong> (structured) machine learning problems. </p>
+<p><a name="reflect"></a></p>
 
-<p>Hence, I started out the competition with an initial goal of learning how to tune Xgboost and this is how my goals got evolved during the competition over a single month: </p>
+<h3 id="toc_2">Candid Reflections on the Competition</h3>
+
+<p>Among those familiar with this field, <a href="http://xgboost.readthedocs.io/">xgboost</a> (XGB) comes to mind as a popular approach to <strong>ANY</strong> (structured) machine learning problem. </p>
+
+<p>Hence, I started the competition with an initial goal of learning how to tune XGB, and this was how my goals evolved during the competition over a single month: </p>
 
 <ol>
-<li>Manage to squeeze into top 10% with XGB&#39;s and wanted to attempt at achieving a bronze medal (top 10%). </li>
-<li>Within no time at all, i was kicked out of top 10%. In order to climb back up to 10%, I had to ensemble with different models. Most people in the forums had recommended Neural Nets to ensemble with XGB. Unfortunately i had no experience with Neural Nets (other than Coursera) before!<br></li>
-<li>Neural Nets are <strong>Very Very</strong> slow on CPU, thus to speed things up, i also had to learn how to set up CUDA on AWS GPU-compute series, install python, Theano, transfer the data and learning to configure juypter notebook! </li>
-<li>With my Neural Net and XGB, a simple average got me into top 5% - great! let&#39;s attempt for a sliver medal instead (top 5%).</li>
-<li>Unfortunately, within no time at all (again), i was almost kicked out of top 5% and there was no guarantee that i might drop further on the private leaderboard due to overfitting.</li>
-<li>Time for stacking! I understood the concept, but i have never done stacking before ; Sadly, i did not extract my out-of-bag predictions from my previous models (Painful but important lesson). I then tried Xgboost and ridge regression for my second level modelling, which yielded lousy results. I gave up and decided to settle for top 10% instead. </li>
-<li>Someone posted about using Neural Nets as a second level model close to the last day, which i decided to give it a last burst of fire - which worked; i was rank 78 on the public leaderboard and 46 on the private leaderboard which was really a surprise! </li>
+<li>Squeezed into the top 10% by tuning XGB, thus decided an attempt to achieve a bronze medal (top 10%). </li>
+<li>Within no time at all, I was kicked out of the top 10%. In order to climb back up, I had to ensemble different models. Most people in the forums had recommended ensembling neural nets with XGB. Unfortunately, apart from learning about it Coursera, I had no experience with neural nets!</li>
+<li>Neural nets are <strong>very</strong> slow on CPU. To speed things up, I learnt to set up CUDA on an AWS GPU-compute series, install python and Theano, transfer data, and to configure a Juypter notebook! </li>
+<li>With my neural net and XGB, a simple average got me into the top 5% - great! Let&#39;s attempt to win a sliver medal instead (top 5%).</li>
+<li>Unfortunately, within no time at all, I was almost kicked out (again) of the top 5%, and there was a risk I might drop further down the private leaderboard due to overfitting.</li>
+<li>Time for stacking! I understood the concept, but I have never done it before. Sadly, I did not extract my out-of-bag predictions from previous models (a painful but important lesson). I tried XGB and ridge regression for a second level modelling, which yielded lousy results. This was when I nearly hit a roadblock and thought I might have to settle for being in the top 10%.</li>
+<li>Just then, someone posted about using neural nets as a second level model close to the last day. In a last burst of fire, I decided to give it a shot—and it worked! I was ranked 78th on the public leaderboard and 46th on the private leaderboard, which was really a surprise! </li>
 </ol>
 
-<hr>
-
-<p><strong>My point about saying all these is:</strong> </p>
+<p>The point i am trying to make is that:</p>
 
 <div><pre><code class="language-none">Kaggle is really a good place to start with lots of helpful people sharing.</code></pre></div>
-
-<hr>
 
 <h3 id="toc_3">Therefore, my objective for publishing this post is to:</h3>
 
 <ol>
 <li>Share about my experience, learnings! </li>
 <li>Document my code! </li>
-<li>Encourage fledging data scientists to-be to start! </li>
+<li>Encourage aspiring data scientists to start! </li>
 </ol>
 
 <hr>
@@ -396,42 +407,44 @@ kbd {
 
 <p><a href="https://www.kaggle.com/c/allstate-claims-severity" target="_blank"><img src="https://www.allstatenewsroom.com/wp-content/uploads/2015/12/Allstate_Logo4.jpeg" width="400"></a></p>
 
-<h1 id="toc_4">&quot;How severe is an insurance claim?&quot;</h1>
+<h1 id="toc_4">Aim of Competition</h1>
 
-<p>The competition was to create an algorithm which accurately predicts claims severity, and the competition metric is <em><a href="https://www.kaggle.com/wiki/MeanAbsoluteError">Mean Absolute Error(MAE)</a></em> . </p>
+<p>The aim of this competition was to create an algorithm to predict the severity of insurance claims. Evaluation metric used was the <em><a href="https://www.kaggle.com/wiki/MeanAbsoluteError">Mean Absolute Error (MAE)</a></em>. </p>
 
 <h2 id="toc_5">Contents</h2>
 
 <ol>
 <li><a href="#custom">Custom Objectives</a></li>
-<li><a href="#xgbfir">Finding Interactions, Encoding, boxcox</a></li>
-<li><a href="#Tune">Tuning Xgb</a></li>
+<li><a href="#xgbfir">Finding Interactions, Encoding, Boxcox</a></li>
+<li><a href="#Tune">Tuning XGB</a></li>
 <li><a href="#NN">Neural Networks</a></li>
-<li><a href="#ensemble1">Ensemble version 1</a></li>
-<li><a href="#ensemble2">Ensemble with weighted average</a></li>
+<li><a href="#ensemble1">Ensemble Version 1</a></li>
+<li><a href="#ensemble2">Ensemble with Weighted Average</a></li>
 <li><a href="#ensemble3">Ensemble with NN</a></li>
-<li><a href="#reflections">Things i should/would have tried</a></li>
+<li><a href="#reflections">Things I should/would have tried</a></li>
 </ol>
 
 <h4 id="toc_6"><a name="custom"></a>Custom Objectives</h4>
 
 <hr>
 
-<p>The first thing i have learnt about <a href="http://www.vanguardsw.com/business-forecasting-101/mean-absolute-deviation-mad-mean-absolute-error-mae/">MAE</a> objective is that it optimises for the median rather than the mean, as compared to MSE which penalises more for points far away from the mean. More information can be found <a href="http://stats.stackexchange.com/questions/147001/is-minimizing-squared-error-equivalent-to-minimizing-absolute-error-why-squared">here</a>.</p>
+<p>My (current) understanding about MSE is that it penalises error that are further away from the mean, while MAE penalises errors equally. The first thing I learnt about the <a href="http://www.vanguardsw.com/business-forecasting-101/mean-absolute-deviation-mad-mean-absolute-error-mae/">MAE</a> metric was that it optimises in terms of the median value, while MSE optimises for the mean. More information  <a href="http://stats.stackexchange.com/questions/147001/is-minimizing-squared-error-equivalent-to-minimizing-absolute-error-why-squared">here</a>.</p>
 
-<p>If you had taken undergraduate mathematics, you would know that <code>y = |x|</code> is non differentiable at <code>x = 0</code>. <a href="http://stackoverflow.com/questions/34178287/difference-between-objective-and-feval-in-xgboost">When you are using Xgboost <code>eval_metric = &#39;mae&#39;</code>, the algorithm would still descent by MSE which poses a problem if you are optimising for MAE</a>. One natural way to overcome this is to simply &#39;squeeze&#39; the target variable, so the effect of values far away from the mean does not get over-penalised. </p>
+<p>If you had taken undergraduate mathematics, you would know that <code>y = |x|</code> is non-differentiable at <code>x = 0</code>. So when you configure Xgboost to use <code>eval_metric = &#39;mae&#39;</code>, the <a href="http://stackoverflow.com/questions/34178287/difference-between-objective-and-feval-in-xgboost">algorithm would still descent by MSE</a>, which poses a problem if you are optimising for MAE. To avoid over-penalising values further away from the mean, you could compress the range of values of your target variable, such as normalising, scaling or log-transform, but it still would not solve the problem. </p>
 
-<p>It turns out that numerical approximation is very useful (thank you taylor series!). This <a href="http://research.microsoft.com/en-us/um/people/zhang/INRIA/Publis/Tutorial-Estim/node24.html">link</a> (<strong>worth reading!</strong>) describes the intuition behind optimising for MAE.</p>
+<p>However, it turned out that numerical approximation is very useful (thank you taylor series!). This <a href="http://research.microsoft.com/en-us/um/people/zhang/INRIA/Publis/Tutorial-Estim/node24.html">link</a> (<strong>worth reading!</strong>) describes the intuition behind optimising for MAE. For those who did undergraduate mathematics/statistics, you would remember functions like Cauchy and huber, which happens to be solvers for MAE problems. More information <a href="http://scipy-cookbook.readthedocs.io/items/robust_regression.html">here</a>.</p>
 
-<p>To summarise, you can observe that the &#39;Fair&#39; objective function mimics the least-absolute function pretty accurately.  </p>
+<p>Basically,  This is done via the &#39;Fair&#39; objective function. Essentially, you define an MAE objective function, but with a the gradient (first derivative) and hessian (second derivative) of the <code>Fair objective Function</code>. </p>
+
+<p>Below, you can observe how the &#39;Fair&#39; objective function mimics the least-absolute function pretty accurately:</p>
 
 <p><img src="http://research.microsoft.com/en-us/um/people/zhang/INRIA/Publis/Tutorial-Estim/img334.gif" width="400"></p>
 
-<p>The objective, gradient (first derivative), hessian (second derivative) of the above functions are defined as follows:</p>
+<p>The objective, gradient, hessian of the above functions are defined as follows:</p>
 
 <p><img src="http://research.microsoft.com/en-us/um/people/zhang/INRIA/Publis/Tutorial-Estim/img333.gif" width="400"></p>
 
-<p>Majority of the scripts in the forums uses the &#39;Fair&#39; objective, - the code is </p>
+<p>Majority of the scripts in the forums used the &#39;Fair&#39; objective, coded as: </p>
 
 <div><pre><code class="language-none">def fair_obj(preds, dtrain):
     fair_constant = 2
@@ -442,9 +455,9 @@ kbd {
     hess = fair_constant * fair_constant / (den * den)
     return grad, hess</code></pre></div>
 
-<p>The smaller <code>fair_constant</code> is, the &#39;slower/smoother&#39; the loss is. </p>
+<p>The smaller <code>fair_constant</code> is, the <em>slower</em> or <em>smoother</em> the loss is. </p>
 
-<p>This custom objective can then be used in xgb.train:</p>
+<p>This custom objective can then be used in <code>xgb.train</code>:</p>
 
 <div><pre><code class="language-none">clf = xgb.train(params,
                 d_train,
@@ -455,23 +468,25 @@ kbd {
                 verbose_eval = n_print,
                 feval=xg_eval_mae)</code></pre></div>
 
-<p>Additional/ Majority  of these information can be found <a href="https://www.kaggle.com/c/allstate-claims-severity/forums/t/24520/effect-of-mae">here</a>.</p>
+<p>Additional information can be found <a href="https://www.kaggle.com/c/allstate-claims-severity/forums/t/24520/effect-of-mae">here</a>.</p>
 
 <h4 id="toc_7"><a href="#start">Back to contents</a></h4>
 
-<h4 id="toc_8"><a name="xgbfir"></a>Finding Interactions, Encoding, boxcox</h4>
+<h4 id="toc_8"><a name="xgbfir"></a>Finding Interactions, Encoding, Boxcox</h4>
 
 <hr>
 
-<h5 id="toc_9">Finding interactions</h5>
+<h5 id="toc_9">Finding Interactions</h5>
 
-<p>One of the problems of linear regression is finding feature interactions. <a href="https://github.com/Far0n/xgbfi">This</a> solves the problem by finding N-way interactions you can use to improve your xgb or as features to input to your model. </p>
+<p>One of the limitations of linear regression is in identifying interactions between features. To solve this, an <a href="https://github.com/Far0n/xgbfi">XGBoost model dump parser</a> was developed as a way to find N-way feature interactions that can be used to improve your XGB model, or to be used as features themselves. </p>
 
-<p>Fortunately, someone else posted <a href="https://www.kaggle.com/modkzs/allstate-claims-severity/lexical-encoding-feature-comb/discussion">this</a> which saved me abit of time on finding N-way feature interactions. </p>
+<p>Fortunately, someone else posted <a href="https://www.kaggle.com/modkzs/allstate-claims-severity/lexical-encoding-feature-comb/discussion">this script</a>, which saved me a bit of time on finding N-way feature interactions. </p>
 
 <h5 id="toc_10">Encoding</h5>
 
-<p>Another interesting function i have learnt on encoding categorical features as compared to label encoding or one hot encoding:</p>
+<p>In the raw data, features ran from <code>A, B, ... , Z,</code> to <code>AA, .. AZ</code>, which seemed to suggest some significance in how the data was ordered.</p>
+
+<p>Therefore, instead of using label or one hot encoding, I experimented with an alternative function to encode these categorical features:</p>
 
 <div><pre><code class="language-none">def encode(charcode):
     r = 0
@@ -481,9 +496,7 @@ kbd {
     return r
     </code></pre></div>
 
-<p>In the raw data, the features are<code>A, B, ... , Z, then AA, .. AZ ..</code>, which seems to suggest that the order matters. </p>
-
-<p>What the function does is essentially:</p>
+<p>Essentially, this function recodes categories based on their rank order:</p>
 
 <ul>
 <li><code>encode(&#39;A&#39;)   = 1</code></li>
@@ -492,22 +505,22 @@ kbd {
 <li><code>encode(&#39;AC&#39;)  = 29</code></li>
 </ul>
 
-<p>This can be used in addition to <code>min/max/mean/counts/ti-idf</code> which i did not get to try in this competition. </p>
+<p>While this method could be used to complement other functions like <code>min/max/mean/counts/ti-idf</code> , I did not manage to test this. </p>
 
 <h5 id="toc_11">Boxcox</h5>
 
-<p>In Certain Machine Learning Algorithms, a normally distributed column can help the algorithm perform better. Unfortunately, figuring out the exact transformation to take on each individual column requires a huge effort.</p>
+<p>Some machine learning algorithms perform better when features are normally distributed. Unfortunately, figuring out how to transform each feature as such requires a huge effort.</p>
 
-<p>Introducing boxcox, a (very) decent way of transforming these features by measuring their <a href="https://en.wikipedia.org/wiki/Skewness">skew</a>.</p>
+<p>Introducing <em>boxcox</em>, a (very) convenient way of transforming these features by measuring their <a href="https://en.wikipedia.org/wiki/Skewness">skew</a>.</p>
 
-<p>These are good articles on explaining boxcox that i came across:</p>
+<p>Here are a couple of good articles explaining boxcox that I came across:</p>
 
 <ul>
 <li><a href="https://www.isixsigma.com/tools-templates/normality/making-data-normal-using-box-cox-power-transformation/">Fairly Layman</a></li>
-<li><a href="http://onlinestatbook.com/2/transformations/box-cox.html">Math and more Math</a> Never thought year one calculus would be this useful!</li>
+<li><a href="http://onlinestatbook.com/2/transformations/box-cox.html">Math and more Math</a>—never thought year one calculus would be this useful!</li>
 </ul>
 
-<p>Some code:</p>
+<p>Implementing boxcox in code:</p>
 
 <div><pre><code class="language-none">skewed_feats = train[numeric_feats].apply(lambda x: skew(x.dropna()))
 skewed_feats = skewed_feats[abs(skewed_feats) &gt; 0.25]
@@ -524,23 +537,21 @@ for feats in skewed_feats:
 
 <hr>
 
-<p>Unless you are extremely experienced in Machine Learning and have a great intuition over parameters, it is likely you have to do some trial and error. </p>
+<p>Unless you are extremely experienced and have good intuition about which parameter values to use, it is likely that you need to learn from trial and error. </p>
 
-<p>I recommend <a href="https://github.com/hyperopt/hyperopt">hyperopt</a> which is a python library for serial and parallel optimization over awkward search spaces. You can even adjust / change the number of layers in a Neural Net! </p>
+<p>For this, I recommend <a href="https://github.com/hyperopt/hyperopt">hyperopt</a>, a python library for serial and parallel optimisation over awkward search spaces. It even allows you to tweak the number of layers in a neural net! </p>
 
 <p>I have some examples in my git repo:</p>
 
 <ul>
-<li><a href="https://github.com/Freedom89/Allstate_kaggle/blob/master/hyperopt_results/hyper_opt_xgb.ipynb">Xgb</a>
+<li><p><a href="https://github.com/Freedom89/Allstate_kaggle/blob/master/hyperopt_results/hyper_opt_xgb.ipynb">XGB</a></p>
 
-<ul>
-<li>Change the data input to power3 if you want to run hyperopt for 3-Way interaction<br></li>
-</ul></li>
-<li><a href="https://github.com/Freedom89/Allstate_kaggle/blob/master/hyperopt_results/extratrees_hyper_opt.ipynb">Extra Trees</a></li>
-<li><a href="https://github.com/Freedom89/Allstate_kaggle/blob/master/hyperopt_results/hyper_opt_random_forest.ipynb">Random Forest</a></li>
+<p>Change the data input to power3 if you want to run hyperopt for a 3-way interaction</p></li>
+<li><p><a href="https://github.com/Freedom89/Allstate_kaggle/blob/master/hyperopt_results/extratrees_hyper_opt.ipynb">Extra Trees</a></p></li>
+<li><p><a href="https://github.com/Freedom89/Allstate_kaggle/blob/master/hyperopt_results/hyper_opt_random_forest.ipynb">Random Forest</a></p></li>
 </ul>
 
-<p>The results of the hyperopt can also be found in the <a href="https://github.com/Freedom89/Allstate_kaggle/tree/master/hyperopt_results">repo</a>.</p>
+<p>Results of the hyperopt can be found in <a href="https://github.com/Freedom89/Allstate_kaggle/tree/master/hyperopt_results">this repo</a>.</p>
 
 <h4 id="toc_14"><a href="#start">Back to contents</a></h4>
 
@@ -552,19 +563,18 @@ for feats in skewed_feats:
 
 <h5 id="toc_16">Using AWS</h5>
 
-<p><a href="https://www.kaggle.com/mtinti/allstate-claims-severity/keras-starter-with-bagging-1111-84364/comments">This</a> script helped a lot in starting out with Neural Networks, but a 8 core Mac Book pro would have taken at least 2 days (55 runs * 30 seconds * 10 fold * 10 bag = 45 hours)!</p>
+<p><a href="https://www.kaggle.com/mtinti/allstate-claims-severity/keras-starter-with-bagging-1111-84364/comments">This script</a> helped me a lot in starting out with neural networks, but running it on an 8-core MacBook pro would have taken at least 2 days (55 runs * 30 seconds * 10 fold * 10 bags = 45 hours)!</p>
 
-<p>With the hype about Cloud, I decided to give AWS GPU-compute series spot instances a go, which was about 0.35 cents an hour. There are plenty of resources online, but there are still a bit of missing pieces). </p>
+<p>With all the hype over cloud computing, I decided to give AWS GPU-compute series spot instances a go, which was about 0.35 cents per hour. While there are plenty of online resources about how to implement this, they are not without missing pieces. </p>
 
-<p>I will write my own guide of installing Anaconda, Juypter, Cudas, Keras, Theano in a separate post soon. </p>
+<p>I will write a guide on installing Anaconda, Juypter, Cudas, Keras and Theano in a separate post soon. </p>
 
-<p>For those who are starting out with Keras like me, there are two things you must take note: </p>
+<p>For those who are starting out with Keras like me, there are two things you must note: </p>
 
 <p>In your home directory, run the following:</p>
 
 <div><pre><code class="language-none">cd .keras/
-nano keras.json #use open/subl depending on your OS 
-</code></pre></div>
+nano keras.json #use open/subl depending on your OS </code></pre></div>
 
 <p>You should see:</p>
 
@@ -575,7 +585,7 @@ nano keras.json #use open/subl depending on your OS
     &quot;backend&quot;: &quot;Tensorflow&quot;
 }</code></pre></div>
 
-<p>If you need to use Theano, you have to edit <code>Tensorflow</code> to <code>Thenao</code></p>
+<p>If you want to use Theano, you have to edit <code>Tensorflow</code> to <code>Theano</code></p>
 
 <div><pre><code class="language-none">{
     &quot;image_dim_ordering&quot;: &quot;tf&quot;, 
@@ -584,7 +594,7 @@ nano keras.json #use open/subl depending on your OS
     &quot;backend&quot;: &quot;theano&quot;
 }</code></pre></div>
 
-<p>After installing theano and if you are using nvidia GPU, you should have a <code>.theanorc</code> file in the home directory, if it is not available you need to create it and paste the following: </p>
+<p>If you are using an Nvidia GPU, installing Theano would introduce a <code>.theanorc</code> file in your home directory. If it&#39;s not there, you need to create one and paste the following inside: </p>
 
 <div><pre><code class="language-none">[global]
 floatX = float32
@@ -600,13 +610,11 @@ root = /usr/local/cuda
 [lib]
 cnmem = 0.95</code></pre></div>
 
-<p>The line <code>cnmem = 0.95</code> is very important, it speed up each iteration from 12 seconds to 6!     </p>
+<p>The line <code>cnmem = 0.95</code> is very important—it halves the duration of each iteration from 12 to 6 seconds!</p>
 
-<h5 id="toc_17">Print Validation loss and Early Stopping</h5>
+<h5 id="toc_17">Print Validation Loss and Early Stopping</h5>
 
-<p>Similar to XGB, to see how the score is improving and early stopping:</p>
-
-<p>You need to first specify the metric function:</p>
+<p>To see monitor whether your score is improving and to determine early stopping, you need to first specify the metric function:</p>
 
 <div><pre><code class="language-none">def mae(y_true, y_pred):
     return K.mean(K.abs(K.exp(y_true) - K.exp(y_pred)))</code></pre></div>
@@ -616,13 +624,13 @@ cnmem = 0.95</code></pre></div>
 <div><pre><code class="language-none">model.compile(loss = &#39;mae&#39;, optimizer = optimizer, metrics=[mae])
 </code></pre></div>
 
-<p>And the early stopping + Model checkpoint, </p>
+<p>Use this code to determine early stopping and checkpoints for your model:</p>
 
 <div><pre><code class="language-none">callsback_list = [EarlyStopping(patience=10),
                   ModelCheckpoint(&#39;keras-regressor-&#39; + str(i+1) +&#39;_&#39;+ str(j+1) + &#39;.check&#39;\
                                   , monitor=&#39;val_loss&#39;, save_best_only=True, verbose=0)]</code></pre></div>
 
-<p>and in the model specify the validation data as well as callsback_list:</p>
+<p>Then, specify the <code>validation_data</code> and <code>callsback</code>:</p>
 
 <div><pre><code class="language-none">fit = model.fit_generator(generator = batch_generator(xtr, ytr, 128, True),
                                   nb_epoch = nepochs,
@@ -631,16 +639,18 @@ cnmem = 0.95</code></pre></div>
                                   validation_data=(xte.todense(),yte),
                                   callbacks=callsback_list)</code></pre></div>
 
-<p>where <code>xtr, ytr</code> is your training set, and <code>xte, yte</code> is your validation set in specified from <code>Kfold</code>. </p>
+<p>where <code>xtr, ytr</code> is the training set, and <code>xte, yte</code> the validation set in the specified <code>Kfold</code>. </p>
 
-<p>You can then call the best model with <code>val_loss</code> or <code>val_mae</code> and make the best prediction with:</p>
+<p>You can then call the best model with <code>val_loss</code> or <code>val_mae</code>, before making the best prediction with:</p>
 
 <div><pre><code class="language-none">fit = load_model(&#39;keras-regressor-&#39; + str(i+1) + &#39;_&#39;+ str(j+1) + &#39;.check&#39;)
     
 pred += np.exp(fit.predict_generator(generator = batch_generatorp(xte, 800, False), \
                                        val_samples = xte.shape[0])[:,0])-200</code></pre></div>
 
-<p><a href="https://github.com/Freedom89/Allstate_kaggle/blob/master/second_level_models/keras_stacking_single_fold.ipynb">Spoiler alert</a> to see how i used early stopping for my second level modelling. It also turns out that saving the model is a good idea if you want to use it later on. You can try it by commenting out these lines in the notebook:</p>
+<h5 id="toc_18">Spoiler alert!</h5>
+
+<p>To see how I used early stopping for my second level modelling, check out <a href="https://github.com/Freedom89/Allstate_kaggle/blob/master/second_level_models/keras_stacking_single_fold.ipynb">this link</a>. Turns out that saving the model is a good idea if you want to use it later on. You can try it by commenting out the following lines from the notebook:</p>
 
 <div><pre><code class="language-none">#comment from here 
 callsback_list = [EarlyStopping(patience=10),\
@@ -660,15 +670,15 @@ fit = model.fit_generator(generator = batch_generator(xtr, ytr, 128, True),
     
 # to here if you just want to use the pre-trained models yourself.</code></pre></div>
 
-<h4 id="toc_18"><a href="#start">Back to contents</a></h4>
+<h4 id="toc_19"><a href="#start">Back to contents</a></h4>
 
-<h4 id="toc_19"><a name="ensemble1"></a>Ensemble version 1</h4>
+<h4 id="toc_20"><a name="ensemble1"></a>Ensemble Version 1</h4>
 
 <hr>
 
-<p>After training my neural networks, I randomly assigned weights to my best xgb and best keras on my prediction see which fits the public leaderboard best. </p>
+<p>After training my neural networks, I randomly assigned weights to my best XGB and Keras predictions to see which would fit the public leaderboard best. </p>
 
-<p>When i decided to do stacking and started reading up:</p>
+<p>When I decided to do stacking, I started reading up:</p>
 
 <ul>
 <li><a href="http://mlwave.com/kaggle-ensembling-guide/">Here</a></li>
@@ -676,9 +686,9 @@ fit = model.fit_generator(generator = batch_generator(xtr, ytr, 128, True),
 <li><a href="https://www.kaggle.com/c/allstate-claims-severity/forums/t/25743/stacking-understanding-python-package-for-stacking">And here</a></li>
 </ul>
 
-<p>I did not have any of my out-of-bag (oob) training set. This meant that i had to re-write my codes and retrain the models. <strong>In the future, for any of my models when running k-fold, i should always extract the oob sets incase stacking is required.</strong></p>
+<p>I did not have any of my out-of-bag (OOB) training sets. This meant that I had to re-write my codes and retrain the models. <strong>Lesson Learnt: You should always extract the OOB sets for models running on <em>k</em>-fold validation even if you are unsure stacking is required.</strong></p>
 
-<h5 id="toc_20">XGB example (pseudo code)</h5>
+<h5 id="toc_21">XGB example (pseudo code)</h5>
 
 <div><pre><code class="language-none">pred_oob = np.zeros(train_x.shape[0])
 
@@ -695,27 +705,26 @@ print(&quot;Writing submission: %s&quot; % sub_file)
 oob_df.to_csv(sub_file, index = False)   
 </code></pre></div>
 
-<p>Similar concepts applies for other models as well (which you can refer to the git repo). </p>
+<p>This concept would apply to other models as well. </p>
 
-<p>Additionally, if you are also running on AWS, disconnections to your juypter kernels might occur and you are unable to track the progress of your code. (e.g which fold / bags it is running). I overcame this problem by adding these few lines in my code:</p>
+<p>Additionally, if you are using AWS, disconnections to your juypter kernels might disrupt tracking of your code progress (e.g which fold or bags it was running). I overcame this problem by adding these lines in my code:</p>
 
-<p>Example for XGB:</p>
+<p>For XGB:</p>
 
 <div><pre><code class="language-none">partial_evalutaion = open(&#39;temp_scores_power2.txt&#39;,&#39;a&#39;) 
 
 partial_evalutaion.write(&#39;Fold &#39;+ str(i) + &#39;- MAE:&#39;+ str(cv_score)+&#39;\n&#39;)
 
-partial_evalutaion.flush()
-</code></pre></div>
+partial_evalutaion.flush()</code></pre></div>
 
-<p>Example for hyperopt:</p>
+<p>For hyperopt:</p>
 
 <div><pre><code class="language-none">partial_evalutaion = open(&#39;extra_trees_bootstrap2.txt&#39;,&#39;a&#39;)   
 
 partial_evalutaion.write(&#39;iteration &#39; + str(space) +str(iter_count) + &#39;with&#39; + &#39; &#39; + str(score) + &#39;\n&#39;)
 partial_evalutaion.flush()</code></pre></div>
 
-<p>For hyperopt, you might also want to see all the parameters that ran, you can specify a data frame and call it within the function to append the results:</p>
+<p>To store all the parameters that ran on hyperopt, you can specify a data frame and call it within the function to append the results:</p>
 
 <div><pre><code class="language-none">Df_results = pd.DataFrame() 
 
@@ -730,19 +739,19 @@ def objective(space):
 Df_results.to_csv(&quot;results.csv&quot;,index = None) 
  </code></pre></div>
 
-<h4 id="toc_21"><a href="#start">Back to contents</a></h4>
+<h4 id="toc_22"><a href="#start">Back to contents</a></h4>
 
-<h4 id="toc_22"><a name="ensemble2"></a>Ensemble with weighted average</h4>
+<h4 id="toc_23"><a name="ensemble2"></a>Ensemble with Weighted Average</h4>
 
 <hr>
 
-<p>The idea for weighted average (in my opinion) stems from linear programming. Credit should also be given to <a href="https://www.kaggle.com/tilii7/allstate-claims-severity/ensemble-weights-minimization-vs-mcmc/comments">this post</a> for sharing the code on find optimal weights. </p>
+<p>The idea for using a weighted average (in my opinion) stems from linear programming. Credit should go to <a href="https://www.kaggle.com/tilii7/allstate-claims-severity/ensemble-weights-minimization-vs-mcmc/comments">this post</a> for sharing the code on finding optimal weights. </p>
 
-<p>Again, to summarise,</p>
+<p>To implement this,</p>
 
 <ul>
-<li>bind all your oob-train set together.</li>
-<li><p>define the objective function as follows:</p>
+<li>Bind all your OOB-training set together, then</li>
+<li><p>Define the objective function as follows:</p>
 
 <div><pre><code class="language-none">def mae_func(weights):
 &#39;&#39;&#39; scipy minimize will pass the weights as a numpy array &#39;&#39;&#39;
@@ -752,7 +761,7 @@ for weight, prediction in zip(weights, predictions):
 
 return mean_absolute_error(Y_values, final_prediction)
 </code></pre></div></li>
-<li><p>Then run the following code:</p>
+<li><p>After which, run the following code:</p>
 
 <div><pre><code class="language-none">for i in range(100):
 starting_values = np.random.uniform(size=len(predictions))
@@ -770,29 +779,27 @@ bestWght = wghts[np.argmin(lls)]
 </code></pre></div></li>
 </ul>
 
-<p>For those familiar with Linear Programming, you could understand that </p>
+<p>For those familiar with linear programming, you would understand that</p>
 
 <p><code>cons = ({&#39;type&#39;:&#39;ineq&#39;,&#39;fun&#39;:lambda w: 1.2-sum(w)}</code> </p>
 
-<p>means the sum of weights should not be greater than 1.2, while </p>
+<p>implies that the sum of weights should not be greater than 1.2, while </p>
 
 <p><code>bounds = [(0,1)]*len(predictions)</code> </p>
 
-<p>means each weight should be between <code>0</code> and <code>1</code>.</p>
+<p>implies that each weight should be between <code>0</code> and <code>1</code>.</p>
 
-<p>With 6 of my xgb models and 4 keras model, it produced <a href="https://github.com/Freedom89/Allstate_kaggle/blob/master/allstate1117.71816974.csv">this</a>, which would have placed me at <code>102</code> in the private leaderboard. </p>
+<p>With 6 XGB models and 4 Keras model, I generated <a href="https://github.com/Freedom89/Allstate_kaggle/blob/master/allstate1117.71816974.csv">this result</a>, which would have ranked me at 102th on the private leaderboard. The local CV score was about <code>1118.34</code> .</p>
 
-<p>The local Cv score was about <code>1118.34</code> .</p>
+<h4 id="toc_24"><a href="#start">Back to contents</a></h4>
 
-<h4 id="toc_23"><a href="#start">Back to contents</a></h4>
-
-<h4 id="toc_24"><a name="ensemble3"></a>Ensemble with NN</h4>
+<h4 id="toc_25"><a name="ensemble3"></a>Ensemble with NN</h4>
 
 <hr>
 
-<p><a href="https://www.kaggle.com/c/allstate-claims-severity/forums/t/26359/is-stacking-working-better-than-weighted-average-for-you?forumMessageId=149495#post149495">This post</a> inspired me to try Neural Networks as my second level model. </p>
+<p><a href="https://www.kaggle.com/c/allstate-claims-severity/forums/t/26359/is-stacking-working-better-than-weighted-average-for-you?forumMessageId=149495#post149495">This post</a> inspired me to try neural networks as my second level model. </p>
 
-<p>I must also admit i was pretty lucky in my first guess of parameters of a two layer NN with 250-100 nodes found <a href="https://github.com/Freedom89/Allstate_kaggle/blob/master/second_level_models/keras_stacking_single_fold.ipynb">here</a>. My 5 fold approach got:</p>
+<p>I must also admit I was pretty lucky in my first guess of parameters of a two layer NN with 250-100 nodes, found <a href="https://github.com/Freedom89/Allstate_kaggle/blob/master/second_level_models/keras_stacking_single_fold.ipynb">here</a>. My 5-fold approach generated the following results:</p>
 
 <div><pre><code class="language-none">(&#39;Fold &#39;, 1, &#39;- MAE:&#39;, 1117.5260825665521)
 (&#39;Fold &#39;, 2, &#39;- MAE:&#39;, 1113.2272453103922)
@@ -801,23 +808,20 @@ bestWght = wghts[np.argmin(lls)]
 (&#39;Fold &#39;, 5, &#39;- MAE:&#39;, 1119.6595219061744)
 (&#39;Total - MAE:&#39;, 1117.9049057391971)</code></pre></div>
 
-<p>Interestingly, I tried 10 folds and I had a worse CV result than <code>1118.34</code> (might not mean a worse LB). </p>
+<p>Interestingly, I tried 10 folds but obtained a worse CV result than <code>1118.34</code> (although it might not have meant a worse LB). </p>
 
-<p>Afterwards I decide to bag my model 5 times :</p>
+<p>Afterwards, I decided to bag my model 5 times :</p>
 
 <div><pre><code class="language-none">(&#39;Fold &#39;, 1, &#39;- MAE:&#39;, 1117.6329549570657)
 (&#39;Fold &#39;, 2, &#39;- MAE:&#39;, 1113.3701316951469)
 (&#39;Fold &#39;, 3, &#39;- MAE:&#39;, 1117.1293409206548)
 (&#39;Fold &#39;, 4, &#39;- MAE:&#39;, 1121.8204992333194)
 (&#39;Fold &#39;, 5, &#39;- MAE:&#39;, 1119.4491190596229)
-(&#39;Total - MAE:&#39;, 1117.880379920515)
-</code></pre></div>
+(&#39;Total - MAE:&#39;, 1117.880379920515)</code></pre></div>
 
 <p>You can see the entire output <a href="https://github.com/Freedom89/Allstate_kaggle/blob/master/second_level_models/keras_stacking_bagged.ipynb">here</a>.</p>
 
-<p>Interestingly the score is only 0.02 points better.</p>
-
-<p>I decided to weigh them with my best first level models and tried the following submissions on the <strong>last day</strong>:</p>
+<p>However, the score was only 0.02 points better. Hence, I decided to weigh them with my best first level models, and tried the following submissions on the <strong>last day</strong>:</p>
 
 <table>
 <thead>
@@ -832,7 +836,7 @@ bestWght = wghts[np.argmin(lls)]
 
 <tbody>
 <tr>
-<td style="text-align: left">Local Cv</td>
+<td style="text-align: left">Local CV</td>
 <td style="text-align: left">1117.90490574</td>
 <td style="text-align: left">1117.77760897</td>
 <td style="text-align: left">1117.88037992</td>
@@ -855,24 +859,24 @@ bestWght = wghts[np.argmin(lls)]
 </tbody>
 </table>
 
-<p>Interestingly, the Single 5 fold performed better in the private LB than the bagged. </p>
+<p>Surprisingly, the single 5-fold model performed better in the private LB than the bagged model. </p>
 
-<p>The final weighted scores, methods and datasets i have used can be found <a href="https://github.com/Freedom89/Allstate_kaggle/blob/master/fmin_second_level.ipynb">here</a>. </p>
+<p>The final weighted scores, codes and datasets I used can be found <a href="https://github.com/Freedom89/Allstate_kaggle/blob/master/fmin_second_level.ipynb">here</a>. </p>
 
-<h4 id="toc_25"><a href="#start">Back to contents</a></h4>
+<h4 id="toc_26"><a href="#start">Back to contents</a></h4>
 
-<h4 id="toc_26"><a name="reflections"></a>Things i should/would have tried</h4>
+<h4 id="toc_27"><a name="reflections"></a>Things I should/would have tried</h4>
 
 <hr>
 
 <ol>
-<li>My Kfold cv results were pretty inconsistent, i should have shuffled the datasets by binning the target. </li>
-<li>Train models specifically for high values of the dataset. </li>
-<li>Bagging with other datasets, other forms of feature engineering </li>
-<li>Explore second level modelling more, eg. weighted average with only 2nd level models.</li>
+<li>Shuffle the datasets by binning the target—my <em>k</em>-fold CV results were pretty inconsistent</li>
+<li>Train specific models for high values of the dataset</li>
+<li>Bagging with other datasets, as well as other forms of feature engineering </li>
+<li>Further explore second level modelling, e.g. using a weighted average with only second level models</li>
 </ol>
 
-<p>Here are also additional links of the top solutions:</p>
+<p>Here are additional links to top solutions:</p>
 
 <ul>
 <li><a href="https://www.kaggle.com/c/allstate-claims-severity/forums/t/26416/1st-place-solution">1st place</a></li>
@@ -884,9 +888,9 @@ bestWght = wghts[np.argmin(lls)]
 <li><a href="https://www.kaggle.com/c/allstate-claims-severity/forums/t/26430/16-place-solution-and-some-questions-about-it">16th place</a></li>
 </ul>
 
-<h4 id="toc_27"><a href="#start">Back to contents</a></h4>
+<h4 id="toc_28"><a href="#start">Back to contents</a></h4>
 
-<h1 id="toc_28">Thanks For Reading!</h1>
+<h1 id="toc_29">Thanks For Reading!</h1>
 
 
 

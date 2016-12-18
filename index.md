@@ -18,14 +18,15 @@ In the many meet-ups I have attended, a common question that aspiring data scien
 
 	What do you look for in a potential hire? 
 
-Typical answers would include:	
+Typical answers would include:
+	
 	* Communication or storytelling skills
 	* Coding proficiency
 	* Learning ability
 	* Passion
 	* And the lists goes on...
 
-Upon hearing this, the follow-up question would most likely be:
+Upon hearing this, the follow-up question usually most likely be:
 
 	 How should I demonstrate this to my potential employer?
 
@@ -34,7 +35,7 @@ And the advice given is usually to:
 	* Increase online presence (e.g. through github, blogs)
 	* Find interesting projects to work on
 
-The truth is, I had procrastinated on fulfilling the above two points, and it was time I did something about it. What better way to do this than to start competing on Kaggle? That was how I joined the Allstate Claims Severity competition, which lasted from Oct to Dec 2016.
+The truth is, I had procrastinated on fulfilling the above two points, and it was time I did something about it. Kaggle seemed like a good fit for the above two objectives. That was how I joined the Allstate Claims Severity competition on 2nd nov, which lasted from Oct to Dec 2016.  
 
 ***
 
@@ -46,7 +47,7 @@ Among those familiar with this field, [xgboost](http://xgboost.readthedocs.io/) 
 
 Hence, I started the competition with an initial goal of learning how to tune XGB, and this was how my goals evolved during the competition over a single month: 
 
-1. Squeezed into the top 10% with XGB, in an attempt to achieve a bronze medal (top 10%). 
+1. Squeezed into the top 10% by tuning XGB, thus decided an attempt to achieve a bronze medal (top 10%). 
 2. Within no time at all, I was kicked out of the top 10%. In order to climb back up, I had to ensemble different models. Most people in the forums had recommended ensembling neural nets with XGB. Unfortunately, apart from learning about it Coursera, I had no experience with neural nets!
 3. Neural nets are **very** slow on CPU. To speed things up, I learnt to set up CUDA on an AWS GPU-compute series, install python and Theano, transfer data, and to configure a Juypter notebook! 
 4. With my neural net and XGB, a simple average got me into the top 5% - great! Let's attempt to win a sliver medal instead (top 5%).
@@ -54,7 +55,7 @@ Hence, I started the competition with an initial goal of learning how to tune XG
 6. Time for stacking! I understood the concept, but I have never done it before. Sadly, I did not extract my out-of-bag predictions from previous models (a painful but important lesson). I tried XGB and ridge regression for a second level modelling, which yielded lousy results. This was when I nearly hit a roadblock and thought I might have to settle for being in the top 10%.
 7. Just then, someone posted about using neural nets as a second level model close to the last day. In a last burst of fire, I decided to give it a shot—and it worked! I was ranked 78th on the public leaderboard and 46th on the private leaderboard, which was really a surprise! 
 
-This was when I realised that:
+The point i am trying to make is that:
 
 	Kaggle is really a good place to start with lots of helpful people sharing.
 
@@ -90,19 +91,21 @@ The aim of this competition was to create an algorithm to predict the severity o
 ####  <a name="custom"></a>Custom Objectives  
 
 ***
+My (current) understanding about MSE is that it penalises error that are further away from the mean, while MAE penalises errors equally. The first thing I learnt about the [MAE](http://www.vanguardsw.com/business-forecasting-101/mean-absolute-deviation-mad-mean-absolute-error-mae/) metric was that it optimises in terms of the median value, while MSE optimises for the mean. More information  [here](http://stats.stackexchange.com/questions/147001/is-minimizing-squared-error-equivalent-to-minimizing-absolute-error-why-squared).
 
-The first thing I learnt about the [MAE](http://www.vanguardsw.com/business-forecasting-101/mean-absolute-deviation-mad-mean-absolute-error-mae/) metric was that it optimises in terms of the median value. This is in contrast with MSE, which penalises points further away from the mean. More information can be found [here](http://stats.stackexchange.com/questions/147001/is-minimizing-squared-error-equivalent-to-minimizing-absolute-error-why-squared).
+If you had taken undergraduate mathematics, you would know that `y = |x|` is non-differentiable at ` x = 0`. So when you configure Xgboost to use ` eval_metric = 'mae' `, the [algorithm would still descent by MSE](http://stackoverflow.com/questions/34178287/difference-between-objective-and-feval-in-xgboost), which poses a problem if you are optimising for MAE. To avoid over-penalising values further away from the mean, you could compress the range of values of your target variable, such as normalising, scaling or log-transform, but it still would not solve the problem. 
 
-If you had taken undergraduate mathematics, you would know that `y = |x|` is non-differentiable at ` x = 0`. So when you configure Xgboost to use ` eval_metric = 'mae' `, the [algorithm would still descent by MSE](http://stackoverflow.com/questions/34178287/difference-between-objective-and-feval-in-xgboost), which poses a problem if you are optimising for MAE. However, it turned out that numerical approximation is very useful (thank you taylor series!). This [link](http://research.microsoft.com/en-us/um/people/zhang/INRIA/Publis/Tutorial-Estim/node24.html) (**worth reading!**) describes the intuition behind optimising for MAE.
 
-Basically, to avoid over-penalising values further away from the mean, you could compress the range of values of your target variable. This is done via the 'Fair' objective function.
+However, it turned out that numerical approximation is very useful (thank you taylor series!). This [link](http://research.microsoft.com/en-us/um/people/zhang/INRIA/Publis/Tutorial-Estim/node24.html) (**worth reading!**) describes the intuition behind optimising for MAE. For those who did undergraduate mathematics/statistics, you would remember functions like Cauchy and huber, which happens to be solvers for MAE problems. More information [here](http://scipy-cookbook.readthedocs.io/items/robust_regression.html).
+
+Basically,  This is done via the 'Fair' objective function. Essentially, you define an MAE objective function, but with a the gradient (first derivative) and hessian (second derivative) of the `Fair objective Function`. 
 
 Below, you can observe how the 'Fair' objective function mimics the least-absolute function pretty accurately:
 
 
 <img src="http://research.microsoft.com/en-us/um/people/zhang/INRIA/Publis/Tutorial-Estim/img334.gif" width="400">
 
-The objective, gradient (first derivative), hessian (second derivative) of the above functions are defined as follows:
+The objective, gradient, hessian of the above functions are defined as follows:
 
 <img src="http://research.microsoft.com/en-us/um/people/zhang/INRIA/Publis/Tutorial-Estim/img333.gif" width="400">
 
@@ -299,7 +302,7 @@ callsback_list = [EarlyStopping(patience=10),
                                   , monitor='val_loss', save_best_only=True, verbose=0)]
 ```
 
-Then, specify the validation data and `callsback_list`:
+Then, specify the `validation_data` and `callsback`:
 
 ```
 fit = model.fit_generator(generator = batch_generator(xtr, ytr, 128, True),
@@ -357,7 +360,7 @@ When I decided to do stacking, I started reading up:
 * [Here](https://www.kaggle.com/mmueller/allstate-claims-severity/stacking-starter/run/390867/code)
 * [And here](https://www.kaggle.com/c/allstate-claims-severity/forums/t/25743/stacking-understanding-python-package-for-stacking)
 
-I did not have any of my out-of-bag (OOB) training sets. This meant that I had to re-write my codes and retrain the models. **Lesson Learnt: You should always extract the OOB sets for models running on *k*-fold validation in case stacking is required.**
+I did not have any of my out-of-bag (OOB) training sets. This meant that I had to re-write my codes and retrain the models. **Lesson Learnt: You should always extract the OOB sets for models running on *k*-fold validation even if you are unsure stacking is required.**
 
 ##### XGB example (pseudo code) 
 
@@ -400,7 +403,7 @@ partial_evalutaion.write('iteration ' + str(space) +str(iter_count) + 'with' + '
 partial_evalutaion.flush()
 ```
 
-To see all the parameters that ran on hyperopt, you can specify a data frame and call it within the function to append the results:
+To store all the parameters that ran on hyperopt, you can specify a data frame and call it within the function to append the results:
 
 ```
 Df_results = pd.DataFrame() 
