@@ -546,6 +546,8 @@ for feats in skewed_feats:
 
 <h4 id="toc_15"><a name="NN"></a>Neural Networks</h4>
 
+<hr>
+
 <p>As mentioned, this is my first time coding a neural net outside of Coursera (<a href="https://www.coursera.org/learn/machine-learning">Andrew Ng&#39;s Machine Learning</a> and <a href="https://www.coursera.org/specializations/machine-learning">UOW&#39;s Machine Learning specialisation</a>).</p>
 
 <h5 id="toc_16">Using AWS</h5>
@@ -658,33 +660,212 @@ fit = model.fit_generator(generator = batch_generator(xtr, ytr, 128, True),
     
 # to here if you just want to use the pre-trained models yourself.</code></pre></div>
 
-<hr>
-
 <h4 id="toc_18"><a href="#start">Back to contents</a></h4>
 
 <h4 id="toc_19"><a name="ensemble1"></a>Ensemble version 1</h4>
 
 <hr>
 
-<h4 id="toc_20"><a href="#start">Back to contents</a></h4>
+<p>After training my neural networks, I randomly assigned weights to my best xgb and best keras on my prediction see which fits the public leaderboard best. </p>
 
-<h4 id="toc_21"><a name="ensemble2"></a>Ensemble with weighted average</h4>
+<p>When i decided to do stacking and started reading up:</p>
+
+<ul>
+<li><a href="http://mlwave.com/kaggle-ensembling-guide/">Here</a></li>
+<li><a href="https://www.kaggle.com/mmueller/allstate-claims-severity/stacking-starter/run/390867/code">Here</a></li>
+<li><a href="https://www.kaggle.com/c/allstate-claims-severity/forums/t/25743/stacking-understanding-python-package-for-stacking">And here</a></li>
+</ul>
+
+<p>I did not have any of my out-of-bag (oob) training set. This meant that i had to re-write my codes and retrain the models. <strong>In the future, for any of my models when running k-fold, i should always extract the oob sets incase stacking is required.</strong></p>
+
+<h5 id="toc_20">XGB example (pseudo code)</h5>
+
+<div><pre><code class="language-none">pred_oob = np.zeros(train_x.shape[0])
+
+for iterations in kfold:
+    #split training and test set 
+    scores_val = clf.predict(d_valid, ntree_limit=clf.best_ntree_limit)
+    pred_oob[test_index] = np.exp(scores_val) - shift
+
+#export the oob training set
+oob_df = pd.DataFrame(pred_oob, columns = [&#39;loss&#39;])
+sub_file = &#39;oob_xgb_fairobj_&#39; + str(score) + &#39;_&#39; + str(
+    now.strftime(&quot;%Y-%m-%d-%H-%M&quot;)) + &#39;.csv&#39;
+print(&quot;Writing submission: %s&quot; % sub_file)
+oob_df.to_csv(sub_file, index = False)   
+</code></pre></div>
+
+<p>Similar concepts applies for other models as well (which you can refer to the git repo). </p>
+
+<p>Additionally, if you are also running on AWS, disconnections to your juypter kernels might occur and you are unable to track the progress of your code. (e.g which fold / bags it is running). I overcame this problem by adding these few lines in my code:</p>
+
+<p>Example of XGB:</p>
+
+<div><pre><code class="language-none">partial_evalutaion = open(&#39;temp_scores_power2.txt&#39;,&#39;a&#39;) 
+
+partial_evalutaion.write(&#39;Fold &#39;+ str(i) + &#39;- MAE:&#39;+ str(cv_score)+&#39;\n&#39;)
+
+partial_evalutaion.flush()
+</code></pre></div>
+
+<p>Example of hyperopt:</p>
+
+<div><pre><code class="language-none">partial_evalutaion = open(&#39;extra_trees_bootstrap2.txt&#39;,&#39;a&#39;)   
+
+partial_evalutaion.write(&#39;iteration &#39; + str(space) +str(iter_count) + &#39;with&#39; + &#39; &#39; + str(score) + &#39;\n&#39;)
+partial_evalutaion.flush()</code></pre></div>
+
+<p>For hyperopt, you might also want to see all the parameters that ran, you can specify a data frame and call it within the function to append the results:</p>
+
+<div><pre><code class="language-none">Df_results = pd.DataFrame() 
+
+def objective(space):
+    ...
+    ...
+    global Df_results
+    Df_results = Df_results.append(log_files_df)
+   
+   return(...)
+   
+Df_results.to_csv(&quot;results.csv&quot;,index = None) 
+ </code></pre></div>
+
+<h4 id="toc_21"><a href="#start">Back to contents</a></h4>
+
+<h4 id="toc_22"><a name="ensemble2"></a>Ensemble with weighted average</h4>
 
 <hr>
 
-<h4 id="toc_22"><a href="#start">Back to contents</a></h4>
+<p>The idea for weighted average (in my opinion) stems from linear programming. Credit should also be given to <a href="https://www.kaggle.com/tilii7/allstate-claims-severity/ensemble-weights-minimization-vs-mcmc/comments">this post</a> for sharing the code on find optimal weights. </p>
 
-<h4 id="toc_23"><a name="ensemble3"></a>Ensemble with NN</h4>
+<p>Again, to summarise,</p>
+
+<ul>
+<li>bind all your oob-train set together.</li>
+<li><p>define the objective function as follows:</p>
+
+<div><pre><code class="language-none">def mae_func(weights):
+&#39;&#39;&#39; scipy minimize will pass the weights as a numpy array &#39;&#39;&#39;
+final_prediction = 0
+for weight, prediction in zip(weights, predictions):
+        final_prediction += weight*prediction
+
+return mean_absolute_error(Y_values, final_prediction)
+</code></pre></div></li>
+<li><p>Then run the following code:</p>
+
+<div><pre><code class="language-none">for i in range(100):
+starting_values = np.random.uniform(size=len(predictions))
+cons = ({&#39;type&#39;:&#39;ineq&#39;,&#39;fun&#39;:lambda w: 1.2-sum(w)})
+bounds = [(0,1)]*len(predictions)
+
+res = minimize(mae_func, starting_values, method=&#39;L-BFGS-B&#39;,
+               bounds=bounds, options={&#39;disp&#39;: False, &#39;maxiter&#39;: 10000})
+
+lls.append(res[&#39;fun&#39;])
+wghts.append(res[&#39;x&#39;])
+
+bestSC = np.min(lls)
+bestWght = wghts[np.argmin(lls)]
+</code></pre></div></li>
+</ul>
+
+<p>For those familiar with Linear Programming, you could understand that </p>
+
+<p><code>cons = ({&#39;type&#39;:&#39;ineq&#39;,&#39;fun&#39;:lambda w: 1.2-sum(w)}</code> </p>
+
+<p>means the sum of weights should not be greater than 1.2, while </p>
+
+<p><code>bounds = [(0,1)]*len(predictions)</code> </p>
+
+<p>means each weight should be between <code>0</code> and <code>1</code>.</p>
+
+<p>With 6 of my xgb models and 4 keras model, it produced <a href="https://github.com/Freedom89/Allstate_kaggle/blob/master/allstate1117.71816974.csv">this</a>, which would have placed me at <code>102</code> in the private leaderboard. </p>
+
+<p>The local Cv score was about <code>1118.34</code> .</p>
+
+<h4 id="toc_23"><a href="#start">Back to contents</a></h4>
+
+<h4 id="toc_24"><a name="ensemble3"></a>Ensemble with NN</h4>
 
 <hr>
 
-<h4 id="toc_24"><a href="#start">Back to contents</a></h4>
+<p><a href="https://www.kaggle.com/c/allstate-claims-severity/forums/t/26359/is-stacking-working-better-than-weighted-average-for-you?forumMessageId=149495#post149495">This post</a> inspired me to try Neural Networks as my second level model. </p>
 
-<h4 id="toc_25"><a name="reflections"></a>Things i should/would have tried</h4>
+<p>I must also admit i was pretty lucky in my first guess of parameters of a two layer NN with 250-100 nodes found <a href="https://github.com/Freedom89/Allstate_kaggle/blob/master/second_level_models/keras_stacking_single_fold.ipynb">here</a>. My 5 fold approach got:</p>
+
+<div><pre><code class="language-none">(&#39;Fold &#39;, 1, &#39;- MAE:&#39;, 1117.5260825665521)
+(&#39;Fold &#39;, 2, &#39;- MAE:&#39;, 1113.2272453103922)
+(&#39;Fold &#39;, 3, &#39;- MAE:&#39;, 1117.1135764027533)
+(&#39;Fold &#39;, 4, &#39;- MAE:&#39;, 1121.9982577768997)
+(&#39;Fold &#39;, 5, &#39;- MAE:&#39;, 1119.6595219061744)
+(&#39;Total - MAE:&#39;, 1117.9049057391971)</code></pre></div>
+
+<p>Interestingly, I tried 10 folds and I had a worse CV result than <code>1118.34</code> (might not mean a worse LB). </p>
+
+<p>Afterwards I decide to bag my model 5 times :</p>
+
+<div><pre><code class="language-none">(&#39;Fold &#39;, 1, &#39;- MAE:&#39;, 1117.6329549570657)
+(&#39;Fold &#39;, 2, &#39;- MAE:&#39;, 1113.3701316951469)
+(&#39;Fold &#39;, 3, &#39;- MAE:&#39;, 1117.1293409206548)
+(&#39;Fold &#39;, 4, &#39;- MAE:&#39;, 1121.8204992333194)
+(&#39;Fold &#39;, 5, &#39;- MAE:&#39;, 1119.4491190596229)
+(&#39;Total - MAE:&#39;, 1117.880379920515)
+</code></pre></div>
+
+<p>You can see the entire output <a href="https://github.com/Freedom89/Allstate_kaggle/blob/master/second_level_models/keras_stacking_bagged.ipynb">here</a>.</p>
+
+<p>Interestingly the score is only 0.02 points better.</p>
+
+<p>I decided to weigh them with my best first level models and tried the following submissions on the <strong>last day</strong>:</p>
+
+<table>
+<thead>
+<tr>
+<th style="text-align: left"></th>
+<th style="text-align: left">Single 5 fold Keras</th>
+<th style="text-align: left">W. avg with single fold NN</th>
+<th style="text-align: left">Bagged 5 fold Keras</th>
+<th style="text-align: left">W.avg with lvl 1 models with both NN</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td style="text-align: left">Local Cv</td>
+<td style="text-align: left">1117.90490574</td>
+<td style="text-align: left">1117.77760897</td>
+<td style="text-align: left">1117.88037992</td>
+<td style="text-align: left">1117.7181697</td>
+</tr>
+<tr>
+<td style="text-align: left">Public LB</td>
+<td style="text-align: left">1100.90013</td>
+<td style="text-align: left">1100.87763</td>
+<td style="text-align: left">1100.88155</td>
+<td style="text-align: left">1100.86946</td>
+</tr>
+<tr>
+<td style="text-align: left">Private LB</td>
+<td style="text-align: left">1112.84611</td>
+<td style="text-align: left">1112.77244</td>
+<td style="text-align: left">1112.93370</td>
+<td style="text-align: left">1112.73936</td>
+</tr>
+</tbody>
+</table>
+
+<p>Interestingly, the Single 5 fold performed better in the private LB than the bagged. </p>
+
+<p>The final weighted scores, methods and datasets i have used can be found <a href="https://github.com/Freedom89/Allstate_kaggle/blob/master/fmin_second_level.ipynb">here</a>. </p>
+
+<h4 id="toc_25"><a href="#start">Back to contents</a></h4>
+
+<h4 id="toc_26"><a name="reflections"></a>Things i should/would have tried</h4>
 
 <hr>
 
-<h4 id="toc_26"><a href="#start">Back to contents</a></h4>
+<h4 id="toc_27"><a href="#start">Back to contents</a></h4>
 
 
 
