@@ -4,7 +4,7 @@ This post records my experience in Kaggle's *[Allstate Claims Severity](https://
 
 * [Self-Introduction](#intro)
 * [Candid Reflections on the Competition](#reflect)
-* [Detailed Methodology](#start)
+* [Things i have learnt](#start)
 
 ***
 
@@ -75,6 +75,8 @@ The point i am trying to make is that:
 #Aim of Competition
 
 The aim of this competition was to create an algorithm to predict the severity of insurance claims. Evaluation metric used was the *[Mean Absolute Error (MAE)](https://www.kaggle.com/wiki/MeanAbsoluteError)*. 
+
+If you wish to reproduce my results, refer to the `README.md` [here](https://github.com/Freedom89/Allstate_kaggle). 
 
 ## Contents
 
