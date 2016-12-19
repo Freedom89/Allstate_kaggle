@@ -1,4 +1,4 @@
-#Getting into Top 5% on Kaggle
+#Getting into Top 2% on Kaggle
 
 This post records my experience in Kaggle's *[Allstate Claims Severity](https://www.kaggle.com/c/allstate-claims-severity)* competition. It has three parts—feel free to skip to whichever you're interested in!
 
