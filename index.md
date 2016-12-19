@@ -14,6 +14,8 @@ This post records my experience in Kaggle's *[Allstate Claims Severity](https://
 
 Hello! I am Yi Xiang, currently employed as a Junior Data Scientist. Feel free to drop me a message if you think I can improve in any way! You can reach me at my [LinkedIn](https://www.linkedin.com/in/yi-xiang-low-b349137b).
 
+Alternatively, you could also leave your comments on this github's issue page [here](https://github.com/Freedom89/Allstate_kaggle/issues).
+
 In the many meet-ups I have attended, a common question that aspiring data scientists ask employers is:
 
 	What do you look for in a potential hire? 
@@ -550,4 +552,7 @@ Here are additional links to top solutions:
 
 ####
 
+##  Want to leave comments? Visit the github issue page [here](https://github.com/Freedom89/Allstate_kaggle/issues).
+
 # Thanks For Reading! 
+
