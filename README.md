@@ -4,6 +4,8 @@
 
 This is my first (serious) attempt at Kaggle and i manage to get 46/3055 in the private leaderboard with [this submission](https://github.com/Freedom89/Allstate_kaggle/blob/master/allstate1117.71816974.csv). You can find my Kaggle profile [here](https://www.kaggle.com/datajanitor).
 
+There is a seperate blog post avaliable [here](http://freedom89.github.io/Allstate_kaggle), which talks about what i have learnt and some pitfalls. 
+
 The order of folders are as follows:  
 
 * [data_prep](https://github.com/Freedom89/Allstate_kaggle/tree/master/data_prep)
